@@ -18,7 +18,7 @@ import { AppService } from './app.service';
       password: process.env.DATA_BASE_PASSWORD,
       database: process.env.DATA_BASE,
       entities: [join(__dirname, '**', '*.model.{ts,js}')],
-      synchronize: true,
+      synchronize: process.env.DATA_BASE_SYNCHRONIZE === "true" ? true : false,
 
     })],
   controllers: [AppController],
