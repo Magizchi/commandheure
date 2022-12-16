@@ -1,0 +1,51 @@
+version: '3.3'
+
+networks:
+  api_lecommandheure_network:
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: api_lecommandheure
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/workspaces
+    networks:
+      - api_lecommandheure_network
+
+  db:
+    image: mariadb:10.6.10-focal
+    container_name: api_lecommandheure_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: sveltesplash
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    networks:
+      - api_lecommandheure_network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: api_lecommandheure_phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    volumes:
+      - phpmyadmin:/sessions
+    ports:
+      - '8080:80'
+    depends_on:
+      - db
+    networks:
+      - api_lecommandheure_network
+
+volumes:
+  db:
+  phpmyadmin:
