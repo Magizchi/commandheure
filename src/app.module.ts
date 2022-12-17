@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProductsModule } from './products/products.module';
+import { LabelsModule } from './labels/labels.module';
+import { CategoriesModule } from './categories/categories.module';
+
 
 @Module({
   imports: [
@@ -17,10 +21,14 @@ import { AppService } from './app.service';
       username: process.env.DATA_BASE_USER,
       password: process.env.DATA_BASE_PASSWORD,
       database: process.env.DATA_BASE,
-      entities: [join(__dirname, '**', '*.model.{ts,js}')],
+      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: process.env.DATA_BASE_SYNCHRONIZE === "true" ? true : false,
 
-    })],
+    }),
+    ProductsModule,
+    LabelsModule,
+    CategoriesModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
