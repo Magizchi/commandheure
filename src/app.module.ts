@@ -5,7 +5,6 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
-import { LabelsModule } from './labels/labels.module';
 import { CategoriesModule } from './categories/categories.module';
 
 
@@ -26,7 +25,6 @@ import { CategoriesModule } from './categories/categories.module';
 
     }),
     ProductsModule,
-    LabelsModule,
     CategoriesModule,
   ],
   controllers: [AppController],
