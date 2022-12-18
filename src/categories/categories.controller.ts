@@ -12,14 +12,16 @@ export class CategoriesController {
     return this.categoriesService.create(createCategoryDto);
   }
 
-  @Get()
-  findAll() {
-    return this.categoriesService.findAll();
+  @Get('menu')
+  async findAll() {
+    const menu = await this.categoriesService.findAll();
+    const formatedMenu = menu.map((item) => item.name.replace(' ', '-'))
+    return formatedMenu.sort();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return 'this.categoriesService.findOne(id)';
+    return `params ${id}`;
   }
 
   @Patch(':id')
