@@ -1,6 +1,7 @@
 export class CreateProductDto {
     constructor(
-        public categoryId: string,
+        public category_id: number,
+        public category: number,
         public name: string,
         public brand: string,
         public quantity_per_box: string,

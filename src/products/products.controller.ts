@@ -22,6 +22,11 @@ export class ProductsController {
     return `file name ${uploadFileStatus}`
   }
 
+  @Get(':id')
+  findByCategory(@Param('id') id: string) {
+    return this.productsService.findByCategory(id)
+  }
+
   @Get()
   findAll() {
     return this.productsService.findAll();

@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoriesService } from 'src/categories/categories.service';
 import { Category } from 'src/categories/entities/category.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
@@ -29,7 +29,8 @@ export class ProductsService {
         const category = await this.categoriesService.findOneBy(product[0])
         if (category) {
           const newProduct: CreateProductDto = {
-            categoryId: `${category.id}`,
+            category_id: category.id,
+            category: category.id,
             code_supplier: product[1],
             name: product[2],
             brand: product[3],
@@ -50,6 +51,19 @@ export class ProductsService {
     )
 
     return 'Upload file'
+  }
+
+  async findByCategory(id: string) {
+    const categoryName = await this.categoriesService.findOneBy(id.replace('-', ' ').toUpperCase())
+    const productPerCategory = await this.productRepository.find({
+      where: {
+        category_id: categoryName.id
+      }
+    })
+    console.log('products_aa', productPerCategory.length);
+
+    return productPerCategory
+
   }
 
   findAll() {
