@@ -9,7 +9,6 @@ import { Products } from "./models/product.models";
 const ProductsPage = () => {
   const [products, setProducts] = useState<Products[]>([]);
   const params = useParams();
-  console.log("prod", products);
 
   const getProducts = async () => {
     const response = await axios.get(API.PRODUCTS_PER_CATEGORY + params.id);
@@ -21,8 +20,16 @@ const ProductsPage = () => {
   }, [params.id]);
 
   return (
-    <section className="w-full bg-red-500 mx-auto">
-      <Table columns={columns} data={products} />
+    <section className="">
+      <Table
+        columns={columns}
+        data={products}
+        size="small"
+        pagination={{
+          defaultPageSize: 20,
+          position: ["topRight", "bottomRight"],
+        }}
+      />
     </section>
   );
 };
@@ -32,13 +39,13 @@ const columns: ColumnsType<Products> = [
     title: "code Fournisseur",
     dataIndex: "code_supplier",
     key: "code_supplier",
-    width: "8em",
+    width: "10em",
   },
   {
     title: "Nom du produit",
     dataIndex: "name",
     key: "name",
-    width: "100%",
+    width: "auto",
   },
   {
     title: "PCB",
