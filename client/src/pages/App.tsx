@@ -1,21 +1,25 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "../layouts";
 import Header from "../layouts/Header";
+import ProductsPage from "./products";
 
 const App = () => {
   return (
-    <body className="min-h-screen bg-gray-100">
-      <Router>
+    <section className="min-h-screen bg-gray-100">
+      <BrowserRouter>
         <Header />
         <Layout>
-          {/* <input type="file" onChange={onChange} />
+          <Routes>
+            <Route path="/products/:id" element={<ProductsPage />} />
+            {/* <input type="file" onChange={onChange} />
     <Route exact path="/" component={Home} />
     <Route exact path="/panier" component={ShoppingCart} />
   <Route exact path="/haudecoeur/product/:id" component={ProductRoutes} /> */}
+          </Routes>
         </Layout>
-      </Router>
-    </body>
+      </BrowserRouter>
+    </section>
   );
 };
 
