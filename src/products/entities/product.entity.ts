@@ -37,4 +37,7 @@ export class Product {
     @Column()
     weight: string;
 
+    @Column()
+    image: string
+
 }
