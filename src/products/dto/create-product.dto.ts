@@ -6,7 +6,7 @@ export class CreateProductDto {
         public brand: string,
         public quantity_per_box: string,
         public ean: string,
-        public code_supplier: string,
+        public code_supplier: number,
         public image_path: string,
         public douane: string,
         public weight: string,
