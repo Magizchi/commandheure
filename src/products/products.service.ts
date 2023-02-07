@@ -29,7 +29,7 @@ export class ProductsService {
           const newProduct: CreateProductDto = {
             category_id: category.id,
             category: category.id,
-            code_supplier: product[1],
+            code_supplier: +product[1],
             name: product[2],
             brand: product[3],
             douane: product[4],
@@ -40,7 +40,7 @@ export class ProductsService {
           }
 
 
-          const t = await this.productRepository.create({ ...newProduct })
+          const t = this.productRepository.create({ ...newProduct })
           // console.log('t', t);
           await this.productRepository.save(t)
           return 'File uploaded and saved'
@@ -57,10 +57,11 @@ export class ProductsService {
    * @returns 
    */
   async findByCategory(category: string, page: number, take: number) {
-    const categoryName = await this.categoriesService.findOneBy(category.replace('-', ' ').toUpperCase())
+    const { id } = await this.categoriesService.findOneBy(category.replace('-', ' ').toUpperCase())
+
     const [productPerCategory, filtered] = await this.productRepository.findAndCount({
       where: {
-        category_id: categoryName.id
+        category_id: id
       },
       skip: (page - 1) * take,
       take: take,
@@ -68,14 +69,11 @@ export class ProductsService {
         code_supplier: 'asc'
       }
     })
-    console.log('productPerCategory', productPerCategory);
 
     const result = {
       products: productPerCategory.sort((a, b) => +a.code_supplier - +b.code_supplier).map((item, index) => ({ ...item, key: 1 + index + (page - 1) * take })),
-      totals: {
-        filterd: filtered,
-        total: filtered
-      }
+      filtered: filtered,
+      total: filtered
     }
     return result
   }
@@ -83,7 +81,7 @@ export class ProductsService {
   async searchProducts(search: string) {
     const filteredProduct = await this.productRepository.findBy([
       { name: Like(`%${search}%`) },
-      { code_supplier: Like(`%${search}%`) }
+      { code_supplier: +Like(`%${search}%`) }
     ])
     return filteredProduct.map((product) => ({ ...product, label: product.name, value: product.code_supplier }))
   }
@@ -92,7 +90,7 @@ export class ProductsService {
     const product = await this.productRepository.find(
       {
         where: {
-          code_supplier: id
+          code_supplier: +id
         },
       }
     )
@@ -112,8 +110,6 @@ export class ProductsService {
             return this.logger.error(error.response.data);
           })
         ))
-
-
 
       const [findProduct] = await this.productRepository.find(
         {
