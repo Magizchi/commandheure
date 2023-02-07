@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
+import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { CategoriesModule } from './categories/categories.module';
     }),
     ProductsModule,
     CategoriesModule,
+    ShoppingCartModule,
   ],
   controllers: [AppController],
   providers: [AppService],
