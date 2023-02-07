@@ -26,7 +26,7 @@ export class Product {
     ean: string;
 
     @Column()
-    code_supplier: string;
+    code_supplier: number;
 
     @Column()
     image_path: string;
