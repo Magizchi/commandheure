@@ -1,4 +1,5 @@
 import { Category } from "src/categories/entities/category.entity";
+import { ShoppingCart } from "src/shopping-cart/entities/shopping-cart.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -22,6 +23,7 @@ export class Product {
     @Column()
     quantity_per_box: string;
 
+
     @Column()
     ean: string;
 
@@ -37,7 +39,9 @@ export class Product {
     @Column()
     weight: string;
 
-    @Column()
+    @Column({ nullable: true })
     image: string
 
+    @OneToOne(() => ShoppingCart, shop => shop.product)
+    shoppingCart: ShoppingCart
 }
