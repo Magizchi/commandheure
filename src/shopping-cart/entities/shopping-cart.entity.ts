@@ -1,16 +1,15 @@
 import { Product } from "src/products/entities/product.entity";
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class ShoppingCart extends BaseEntity {
+export class ShoppingCart {
     @PrimaryGeneratedColumn()
     id: number
 
-
-    @OneToOne(() => Product, product => product.code_supplier)
-    @JoinColumn({ name: 'code_supplier' })
-    test: Product
+    @OneToOne(() => Product, product => product.shoppingCart)
+    @JoinColumn()
+    product: Product;
 
     @Column()
-    order: number;
+    quantities: number;
 }
