@@ -1,4 +1,5 @@
-export interface Products {
+export interface Product {
+    key: number;
     id: number;
     category_id: number;
     name: string;
@@ -6,7 +7,8 @@ export interface Products {
     quantity_per_box: string;
     ean: string;
     code_supplier: string;
-    image_path: string;
+    image: string;
     douane: string;
     weight: string;
+    quantities: number
 }
