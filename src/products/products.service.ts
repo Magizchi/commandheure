@@ -40,9 +40,8 @@ export class ProductsService {
           }
 
 
-          const t = this.productRepository.create({ ...newProduct })
-          // console.log('t', t);
-          await this.productRepository.save(t)
+          const createdProduct = this.productRepository.create({ ...newProduct })
+          await this.productRepository.save(createdProduct)
           return 'File uploaded and saved'
         }
       })
@@ -56,7 +55,7 @@ export class ProductsService {
    * @param take take products
    * @returns 
    */
-  async findByCategory(category: string, page: number, take: number) {
+  async getProducts(category: string, page: number, take: number) {
     const { id } = await this.categoriesService.findOneBy(category.replace('-', ' ').toUpperCase())
 
     const [productPerCategory, filtered] = await this.productRepository.findAndCount({
@@ -67,11 +66,16 @@ export class ProductsService {
       take: take,
       order: {
         code_supplier: 'asc'
+      },
+      relations: {
+        shoppingCart: true
       }
     })
 
     const result = {
-      products: productPerCategory.sort((a, b) => +a.code_supplier - +b.code_supplier).map((item, index) => ({ ...item, key: 1 + index + (page - 1) * take })),
+      products: productPerCategory.sort((a, b) => +a.code_supplier - +b.code_supplier).map((item, index) =>
+        ({ ...item, key: 1 + index + (page - 1) * take, quantities: item.shoppingCart?.quantities ?? 0 })
+      ),
       filtered: filtered,
       total: filtered
     }
@@ -140,23 +144,3 @@ export class ProductsService {
 
   }
 }
-
-// create(createProductDto: CreateProductDto) {
-//   return 'This action adds a new product';
-// }
-
-// findAll() {
-//   return `This action returns all products`;
-// }
-
-// findOne(id: number) {
-//   return `This action returns a #${id} product`;
-// }
-
-// update(id: number, updateProductDto: UpdateProductDto) {
-//   return `This action updates a #${id} product`;
-// }
-
-// remove(id: number) {
-//   return `This action removes a #${id} product`;
-// }
