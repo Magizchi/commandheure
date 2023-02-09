@@ -1,4 +1,5 @@
 export enum API {
     MENU = "/api/categories/menu",
-    PRODUCTS_PER_CATEGORY = "/api/products/"
+    PRODUCTS = "/api/products",
+    SHOPPING_CART = "/api/shopping-cart"
 }
