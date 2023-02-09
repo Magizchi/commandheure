@@ -1,26 +1,27 @@
-import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ROUTES } from "../constants/Routes";
 import Layout from "../layouts";
 import Header from "../layouts/Header";
 import ProductsPage from "./products";
+import ShoppingCartPage from "./shoppingCart";
 
-const App = () => {
-  return (
-    <section className="min-h-screen bg-gray-100">
-      <BrowserRouter>
-        <Header />
-        <Layout>
-          <Routes>
-            <Route path="/products/:id" element={<ProductsPage />} />
-            {/* <input type="file" onChange={onChange} />
-    <Route exact path="/" component={Home} />
-    <Route exact path="/panier" component={ShoppingCart} />
-  <Route exact path="/haudecoeur/product/:id" component={ProductRoutes} /> */}
-          </Routes>
-        </Layout>
-      </BrowserRouter>
-    </section>
-  );
-};
+const App = () => (
+  <section className="min-h-screen bg-gray-100">
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route
+          path={ROUTES.PRODUCTS}
+          element={
+            <Layout>
+              <ProductsPage />
+            </Layout>
+          }
+        />
+        <Route path={ROUTES.SHOPPING_CART} element={<ShoppingCartPage />} />
+      </Routes>
+    </BrowserRouter>
+  </section>
+);
 
 export default App;
