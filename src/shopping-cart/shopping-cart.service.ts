@@ -13,16 +13,28 @@ export class ShoppingCartService {
   ) { }
 
   create(createShoppingCartDto: CreateShoppingCartDto) {
-    console.log('cr', createShoppingCartDto);
-    const product = this.shoppingCartRepository.create(createShoppingCartDto)
-    console.log('product', product)
-    this.shoppingCartRepository.save(product)
-
-    return 'This action adds a new shoppingCart';
+    try {
+      const product = this.shoppingCartRepository.create(createShoppingCartDto)
+      this.shoppingCartRepository.save(product)
+      return 'This action adds a new shoppingCart';
+    } catch (err) {
+      return `Message: ${err}`
+    }
   }
 
-  findAll() {
-    return `This action returns all shoppingCart`;
+  async findAll() {
+    try {
+      const productsJoinShoppingCart = await this.shoppingCartRepository.find({
+        relations: {
+          product: true
+        }
+      })
+      const products = productsJoinShoppingCart.map((item) => ({ ...item.product, quantities: item.quantities }))
+      return products
+
+    } catch (err) {
+      return `Message: ${err}`
+    }
   }
 
   findOne(id: number) {
