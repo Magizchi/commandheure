@@ -4,7 +4,7 @@ export interface Product {
     category_id: number;
     name: string;
     brand: string;
-    quantity_per_box: string;
+    quantity_per_box: number;
     ean: string;
     code_supplier: string;
     image: string;
