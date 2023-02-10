@@ -52,7 +52,7 @@ const columns: ColumnsType<Product> = [
     width: "8em",
   },
   {
-    title: "Quantiter",
+    title: "Quantité",
     dataIndex: "quantities",
     key: "key",
   },
