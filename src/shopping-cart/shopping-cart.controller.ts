@@ -5,7 +5,7 @@ import { UpdateShoppingCartDto } from './dto/update-shopping-cart.dto';
 
 @Controller('shopping-cart')
 export class ShoppingCartController {
-  constructor(private readonly shoppingCartService: ShoppingCartService) {}
+  constructor(private readonly shoppingCartService: ShoppingCartService) { }
 
   @Post()
   create(@Body() createShoppingCartDto: CreateShoppingCartDto) {

@@ -27,10 +27,7 @@ export class ProductsController {
 
   @Get('site/:id')
   redirect(@Param('id') id: string) {
-    console.log('&é"', id);
-
     return this.productsService.positionProduct(id)
-
   }
 
   @Get('images/get-images')

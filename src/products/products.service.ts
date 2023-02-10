@@ -107,7 +107,6 @@ export class ProductsService {
   async getImages() {
     const allProducts = await this.productRepository.find()
     await Promise.all(allProducts.map(async (product) => {
-      // console.log('pr', product.code_supplier)
       const response: any = await firstValueFrom(
         this.httpService.get<any>(`https://world.openfoodfacts.org/api/v3/product/${product.ean}`).pipe(
           catchError((error: any) => {
@@ -123,10 +122,7 @@ export class ProductsService {
         }
       )
 
-      // console.log('findProduct', findProduct);
-
       const addedImage = { ...findProduct, image: response.data.product.image_front_small_url }
-      // console.log('addedImage', addedImage)
       await this.productRepository.save(addedImage)
 
       // if (response) {  

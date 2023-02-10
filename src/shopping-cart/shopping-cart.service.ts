@@ -12,11 +12,11 @@ export class ShoppingCartService {
     private readonly shoppingCartRepository: Repository<ShoppingCart>
   ) { }
 
-  create(createShoppingCartDto: CreateShoppingCartDto) {
+  async create(createShoppingCartDto: CreateShoppingCartDto) {
     try {
       const product = this.shoppingCartRepository.create(createShoppingCartDto)
-      this.shoppingCartRepository.save(product)
-      return 'This action adds a new shoppingCart';
+      const saved = await this.shoppingCartRepository.save(product)
+      return saved
     } catch (err) {
       return `Message: ${err}`
     }
@@ -24,14 +24,12 @@ export class ShoppingCartService {
 
   async findAll() {
     try {
-      const productsJoinShoppingCart = await this.shoppingCartRepository.find({
+      const shopcart = await this.shoppingCartRepository.find({
         relations: {
           product: true
         }
       })
-      const products = productsJoinShoppingCart.map((item) => ({ ...item.product, quantities: item.quantities }))
-      return products
-
+      return shopcart.map(({ product, id, quantities }) => ({ shoppingCartId: id, quantities, ...product }))
     } catch (err) {
       return `Message: ${err}`
     }
@@ -42,7 +40,12 @@ export class ShoppingCartService {
   }
 
   update(id: number, updateShoppingCartDto: UpdateShoppingCartDto) {
-    return `This action updates a #${id} shoppingCart`;
+    try {
+      this.shoppingCartRepository.update(id, updateShoppingCartDto)
+      return `This action updates a #${id} shoppingCart`;
+    } catch (err) {
+      throw `Message: ${err}`
+    }
   }
 
   remove(id: number) {
