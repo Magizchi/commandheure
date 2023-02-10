@@ -47,11 +47,12 @@ const ProductsPage = () => {
 
       if (id) {
         await axios.patch(API.SHOPPING_CART + `/${id}`, body);
+        update({ ...product, shoppingCart: { id: product.shoppingCart.id, quantities: value } });
       } else {
-        await axios.post(API.SHOPPING_CART, body);
+        const { data: saved } = await axios.post(API.SHOPPING_CART, body);
+        update({ ...product, shoppingCart: { id: saved.id, quantities: saved.quantities } });
       }
-
-      update({ ...product, shoppingCart: { id: product.shoppingCart?.id ?? null, quantities: value } });
+      return;
     } catch (err) {
       throw `Erreur:${err}`;
     }
