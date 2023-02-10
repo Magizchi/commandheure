@@ -74,7 +74,7 @@ export class ProductsService {
 
     const result = {
       products: productPerCategory.sort((a, b) => +a.code_supplier - +b.code_supplier).map((item, index) =>
-        ({ ...item, key: 1 + index + (page - 1) * take, quantities: item.shoppingCart?.quantities ?? 0 })
+        ({ ...item, key: 1 + index + (page - 1) * take })
       ),
       filtered: filtered,
       total: filtered
