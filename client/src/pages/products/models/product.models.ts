@@ -10,5 +10,10 @@ export interface Product {
     image: string;
     douane: string;
     weight: string;
-    quantities: number
+    shoppingCart: { id: number, quantities: number }
 }
+
+export const FormatProduct = (data: any[]): Product[] => data.map((product: Product) => ({
+    ...product,
+    shoppingCart: { id: product.shoppingCart?.id ?? null, quantities: product.shoppingCart?.quantities ?? 0 }
+}))
