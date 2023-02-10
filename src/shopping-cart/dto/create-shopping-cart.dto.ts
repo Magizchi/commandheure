@@ -1,1 +1,6 @@
-export class CreateShoppingCartDto {}
+export class CreateShoppingCartDto {
+    constructor(
+        public quantities: number,
+        public productId: number,
+    ) { }
+}
