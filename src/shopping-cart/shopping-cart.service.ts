@@ -29,7 +29,8 @@ export class ShoppingCartService {
           product: true
         }
       })
-      return shopcart.map(({ product, id, quantities }) => ({ shoppingCartId: id, quantities, ...product }))
+
+      return shopcart.map(({ product, id, quantities }) => ({ key: id, shoppingCart: { id, quantities, }, ...product }))
     } catch (err) {
       return `Message: ${err}`
     }
