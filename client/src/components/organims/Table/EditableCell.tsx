@@ -1,88 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { FunctionComponent } from "react";
 import { InputNumber } from "antd";
-import { useShoppingCartContext } from "../../../contexts/shoppingCart";
-import Button from "../../atoms/Button";
-import { PlusOutlined } from "@ant-design/icons";
+import useDelay from "../../../hooks/useHookDelay";
 import { Product } from "../../../pages/products/models/product.models";
+import { useShoppingCartContext } from "../../../contexts/shoppingCart";
 
-export interface EditableCellProps {
-  title: React.ReactNode;
-  editable: boolean;
+export interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
+  editing: boolean;
   children: React.ReactNode;
-  dataIndex: keyof Product;
+  dataIndex: string;
   record: Product;
-  handleSave: (record: Product) => void;
+  update: (record: Product) => Product;
 }
 
-const EditableCell: React.FC<EditableCellProps> = ({
-  title,
-  editable,
-  children,
+const EditableCell: FunctionComponent<EditableCellProps> = ({
   dataIndex,
+  update,
+  editing = false,
+  children,
   record,
-  handleSave,
-  ...restProps
+  ...props
 }) => {
-  const { saveProduct } = useShoppingCartContext();
-  const [value, setValue] = useState<number>(record ? record.quantities : 0);
-  const [editing, setEditing] = useState(true);
-  const toggleEdit = () => {
-    setEditing(!editing);
-  };
-  // console.log("record", record);
+  const { product, setProduct } = useShoppingCartContext();
+  const onChange = (value: number) =>
+    setProduct({ ...record, shoppingCart: { id: record.shoppingCart?.id, quantities: value } });
 
-  const onChange = (value: any) => {
-    setValue(value);
-    saveProduct({ ...record, quantities: value });
-  };
-
-  let childNode = children;
-
-  if (editable) {
-    childNode = editing ? (
-      <div className="flex">
-        <Button className="mx-1 flex justify-center items-center" onClick={() => onChange(value - 5)}>
-          -5
-        </Button>
-        <Button className="mx-1 flex justify-center items-center" onClick={() => onChange(value - 1)}>
-          -1
-        </Button>
+  return (
+    <td {...props}>
+      {editing ? (
         <InputNumber
+          keyboard={false}
+          controls={false}
           name={dataIndex}
-          defaultValue={value === 0 ? undefined : value}
-          value={value}
+          defaultValue={product.shoppingCart?.quantities ?? record?.shoppingCart.quantities}
+          value={product.shoppingCart?.quantities ?? record?.shoppingCart.quantities}
           className="mx-1 flex justify-center items-center"
           min={0}
-          onChange={onChange}
+          onChange={useDelay((value) => onChange(value ?? 0), 500)}
         />
-        <Button
-          className="mx-1 flex justify-center items-center"
-          onClick={() => onChange(value + 1)}
-          icon={
-            <div className="mx-1 flex justify-center items-center">
-              <PlusOutlined />
-            </div>
-          }
-        />
-        <Button
-          className="mx-1 flex justify-center items-center"
-          onClick={() => onChange(value + 5)}
-          icon={
-            <div className="mx-1 flex justify-center items-center">
-              <PlusOutlined />
-              <PlusOutlined />
-            </div>
-          }
-        />
-      </div>
-    ) : (
-      <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit}>
-        {children}
-      </div>
-    );
-  }
-
-  return <td {...restProps}>{childNode}</td>;
+      ) : (
+        children
+      )}
+    </td>
+  );
 };
 
 export default EditableCell;
