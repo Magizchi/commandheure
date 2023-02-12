@@ -3,6 +3,7 @@ import classNames from "classnames";
 import React, { FunctionComponent, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { API } from "../constants/API";
+import { ROUTES } from "../constants/Routes";
 
 const Layout: FunctionComponent<{ children: React.ReactNode }> = ({ children }) => {
   const [menu, setmenu] = useState<string[]>([]);
@@ -24,7 +25,7 @@ const Layout: FunctionComponent<{ children: React.ReactNode }> = ({ children }) 
           {menu.map((data: string, index: number) => (
             <Link
               key={index}
-              to={API.PRODUCTS + `/${data.toLowerCase()}?size=20&page=1`}
+              to={ROUTES.PRODUCTS + `/${data.toLowerCase()}?size=20&page=1`}
               className={classNames("px-2 py-1 hover:bg-primary hover:text-white", {
                 "bg-primary text-white": location.pathname.includes(data.toLowerCase()),
                 "bg-none text-primary": !location.pathname.includes(data.toLowerCase()),

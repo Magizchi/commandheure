@@ -12,7 +12,7 @@ const App = () => (
       <Header />
       <Routes>
         <Route
-          path={ROUTES.PRODUCTS}
+          path={ROUTES.PRODUCTS + "/:id"}
           element={
             <Layout>
               <ProductsPage />
