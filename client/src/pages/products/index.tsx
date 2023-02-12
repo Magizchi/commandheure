@@ -18,11 +18,11 @@ const ProductsPage = () => {
 
   const getProducts = async () => {
     const {
-      data: { products, totals },
+      data: { products, total },
     } = await axios.get(API.PRODUCTS + `/${params.id}?${searchParams.toString()}`);
 
     save(FormatProduct(products));
-    setTotalProducts(totals);
+    setTotalProducts(total);
   };
 
   useEffect(() => {

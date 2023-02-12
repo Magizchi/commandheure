@@ -24,7 +24,15 @@ const Pagination: FunctionComponent<PaginationProps> = ({ ...props }) => {
     setParams(`size=${pageSize}&page=${pagination}`);
   };
 
-  return <PaginationAnt defaultPageSize={pagination.defaultPageSize} onChange={onChange} {...props} />;
+  return (
+    <PaginationAnt
+      defaultPageSize={pagination.defaultPageSize}
+      defaultCurrent={pagination.page}
+      current={pagination.page}
+      onChange={onChange}
+      {...props}
+    />
+  );
 };
 
 export default Pagination;
