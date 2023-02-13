@@ -67,13 +67,15 @@ const ProductsPage = () => {
             hoverable
             key={product.code_supplier}
             className="w-64 m-2"
-            cover={
-              <img className="flex justify-center items-center h-60 bg-contain" alt="exemple" src={product.image} />
-            }
+            title={product.name.split(/\d+\W+\d|\d+[a-zA-Z]{1,}/gm)[0]}
+            // cover={
+            //   <img className="flex justify-center items-center h-60 bg-contain" alt="exemple" src={product.image} />
+            // }
           >
             <div className="flex flex-col justify-between h-40">
               <div>
                 <p className="m-0 p-0 ">{product.name}</p>
+                <p>marque: {product.brand}</p>
                 <p>Colisage: {product.quantity_per_box}</p>
               </div>
               <div className="flex justify-center">
