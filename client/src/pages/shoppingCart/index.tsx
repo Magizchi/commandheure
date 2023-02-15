@@ -26,7 +26,12 @@ const ShoppingCartPage = () => {
 
   const isEditing = (record: Product) => record.key === editingKey;
   const edit = (record: Product) => setEditingKey(record.key);
-
+  const removeProduct = async (record: Product) => {
+    const response = await axios.delete(API.SHOPPING_CART + "/" + record.shoppingCart.id);
+    if (response.status === 200) {
+      getShoppingList();
+    }
+  };
   const columns: ColumnsType<Product> = [
     {
       title: "code",
@@ -87,9 +92,20 @@ const ShoppingCartPage = () => {
             <a onClick={() => [setEditingKey(0), setProduct({} as Product)]}>Annuler</a>
           </span>
         ) : (
-          <Typography.Link disabled={editingKey !== 0} onClick={() => edit(record)}>
-            Changer
-          </Typography.Link>
+          <>
+            <Typography.Link disabled={editingKey !== 0} onClick={() => edit(record)}>
+              Changer
+            </Typography.Link>
+            <Typography.Link
+              onClick={() => {
+                removeProduct(record);
+              }}
+              style={{ marginRight: 8 }}
+              className="!ml-2"
+            >
+              Supprimer
+            </Typography.Link>
+          </>
         );
       },
     },

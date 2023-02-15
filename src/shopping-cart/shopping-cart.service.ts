@@ -50,6 +50,11 @@ export class ShoppingCartService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} shoppingCart`;
+    try {
+      this.shoppingCartRepository.delete(id)
+      return `${id} supprimer`
+    } catch (err) {
+      return 'Erreur Server'
+    }
   }
 }
