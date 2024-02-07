@@ -21,7 +21,7 @@ services:
     container_name: api_lecommandheure_mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: sveltesplash
+      MYSQL_DATABASE: lecommandheureDB
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     volumes:
