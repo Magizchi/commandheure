@@ -15,6 +15,9 @@ export class Product {
     category_id: number;
 
     @Column()
+    title: string;
+
+    @Column()
     name: string;
 
     @Column()
