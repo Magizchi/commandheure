@@ -1,10 +1,14 @@
-INSERT INTO `product` (`id`, `category_id`, `title`, `name`, `brand`, `quantity_per_box`, `ean`, `code_supplier`, `image_path`, `douane`, `weight`, `image`) VALUES 
-(NULL, 1, 'Mais Hominy', 'Mais Hominy', 'Legumor', 15, '', 5381, 'images--369.jpg', '', '1kg', ''),
-(NULL, 1, 'Mais Haïti', 'Mais Haïti', 'Legumor', 15, '', 5391, 'images--361.jpg', '', '1kg', ''),
-(NULL, 1, 'Farine de Maïs Fioretto', 'Farine de Maïs Fioretto - Jaune', 'Legumor', 10, '', 5241, 'images--363.jpg', '', 'Jaune', ''),
-(NULL, 1, 'Farine de Maïs Fioretto', 'Farine de Maïs Fioretto - Blanche', 'Legumor', 10, '', 5341, 'images--364.jpg', '', 'blanche', ''),
-(NULL, 1, 'Semoule de maïs', 'Semoule de maïs Fine: Nostrana Jaune', 'Legumor', 14, '', 5201, 'images--365.jpg', '', 'Fine: Nostrana Jaune', ''),
-(NULL, 1, 'Semoule de maïs', 'Semoule de maïs Moyenne: bramata grossa', 'Legumor', 14, '', 5221, 'images--367.jpg', '', 'Moyenne: bramata grossa', ''),
+INSERT INTO `product` (`id`, `category_id`, `title`, `name`, `brand`, `quantity_per_box`, `ean`, `code_supplier`, `image_path`, `douane`, `weight`, `image`) VALUES
+(NULL, '1', 'Houmous Tahina', 'Houmous Tahina', 'alwadi', '12', '', '40047', '', '', '850g', ''),
+(NULL, '1', 'Houmous Tahina', 'Houmous Tahina', 'alwadi', '12', '', '40030', '', '', '400g', ''),
+(NULL, '1', 'Tahina', 'Tahina', 'alwadi', '1', '', '40050', '', '', '4.5kg', ''),
+(NULL, '1', 'Tahina', 'Tahina', 'alwadi', '12', '', '40038', '', '', '908g', ''),
+(NULL, '1', 'Tahina', 'Tahina', 'alwadi', '12', '', '40036', '', '', '454g', ''),
+(NULL, '1', 'Pulpe d aubergine grillée', 'Pulpe d aubergine grillée', 'alwadi', '12', '', '40031', '', '', '480g', ''),
+(NULL, '1', 'Falafels', 'Falafels', 'alwadi', '12', '', '40027', '', '', '200g', ''),
+(NULL, '1', 'Mélasse de grenade', 'Mélasse de grenade', 'alwadi', '12', '', '40037', '', '', '300ml', ''),
+(NULL, '1', 'Halva Pistache', 'Halva Pistache', 'alwadi', '12', '', '40029', '', '', '454g', ''),
+
 
 (NULL, 2, 'Amande blanchie entière', 'Amande blanchie entière', 'profruit', 10, '', 12220, 'images--391.jpg', '', '1kg', ''),
 (NULL, 2, 'Amande blanchie entière', 'Amande blanchie entière', 'profruit', 25, '', 12258, 'images--391.jpg', '', '400g', ''),
@@ -188,7 +192,6 @@ INSERT INTO `product` (`id`, `category_id`, `title`, `name`, `brand`, `quantity_
 (NULL, 10, 'Maïs à éclater Pop corn - 1kg', '', 'Legumor', 15, '', 11102, '', '', '1kg', 'images--278.jpg'),
 (NULL, 10, 'Maïs à éclater Pop corn - 500g', '', 'Legumor', 12, '', 11103, '', '', '500g', 'images--278.jpg'),
 
-INSERT INTO `product` (`id`, `category_id`, `title`, `name`, `brand`, `quantity_per_box`, `ean`, `code_supplier`, `image_path`, `douane`, `weight`, `image`) VALUES 
 (NULL, 11, 'Lentille verte - 25kg', '', 'Legumor', 1, '', 3008, '', '', '25kg', 'images--261.jpg'),
 (NULL, 11, 'Lentille verte - 10kg', '', 'Legumor', 1, '', 3009, '', '', '10kg', 'images--261.jpg'),
 (NULL, 11, 'Lentille verte - 5kg', '', 'Legumor', 1, '', 3005, '', '', '5kg', 'images--261.jpg'),
@@ -240,7 +243,7 @@ INSERT INTO `product` (`id`, `category_id`, `title`, `name`, `brand`, `quantity_
 (NULL, 13, 'Riz blanc Indica 5kg', '', 'Riz du Monde', 1, '', 1205, 'images--154.jpg', '', '5kg', 'images--154.jpg'),
 (NULL, 13, 'Riz étuvé Indica 5kg', '', 'Riz du Monde', 1, '', 1605, 'images--165.jpg', '', '5kg', 'images--165.jpg'),
 (NULL, 13, 'Riz étuvé Indica 1kg', '', 'Riz du Monde', 10, '', 1601, 'images--165.jpg', '', '1kg', 'images--165.jpg'),
-(NULL, 13, 'Riz Cargo 1kg', '', 'Riz du Monde', 15, '', 1011, 'images--200.jpg', '', '1kg', 'images--200.jpg')
+(NULL, 13, 'Riz Cargo 1kg', '', 'Riz du Monde', 15, '', 1011, 'images--200.jpg', '', '1kg', 'images--200.jpg'),
 
 (NULL, 14, 'Semoule de blé Fin 25kg', 'Fin', 'Legumor', 1, '', 5040, 'images--295.jpg', '', '25kg', 'images--295.jpg'),
 (NULL, 14, 'Semoule de blé Fin 5kg', 'Fin', 'Legumor', 1, '', 5005, 'images--295.jpg', '', '5kg', 'images--295.jpg'),
@@ -307,7 +310,7 @@ INSERT INTO `product` (`id`, `category_id`, `title`, `name`, `brand`, `quantity_
 (NULL, 15, 'Zakia Halal Sauce bolognaise 400g', 'Sauce bolognaise', 'Zakia', 12, '', 10068, '', '', '', ''),
 (NULL, 15, 'Bouillons halal Jumbo Bouillons de mouton halal 8 cubes 80g', 'Bouillons de mouton halal 8 cubes', 'Jumbo', 24, '', 11655, '', '', '', ''),
 (NULL, 15, 'Bouillons halal Jumbo Bouillons de boeuf halal 8 cubes 80g', 'Bouillons de boeuf halal 8 cubes', 'Jumbo', 24, '', 11654, '', '', '', ''),
-(NULL, 15, 'Bouillons halal Jumbo Bouillons de poulet halal 8 cubes 80g', 'Bouillons de poulet halal 8 cubes', 'Jumbo', 24, '', 11653, '', '', '', '');
+(NULL, 15, 'Bouillons halal Jumbo Bouillons de poulet halal 8 cubes 80g', 'Bouillons de poulet halal 8 cubes', 'Jumbo', 24, '', 11653, '', '', '', ''),
 
 (NULL, 16, 'Arôme rose 1/2L', '', 'Jumbo', 12, '', 11599, '', '', '', ''),
 (NULL, 16, 'Sirop de glucose 1kg', '', 'Jumbo', 12, '', 11540, '', '', '', ''),
@@ -326,4 +329,4 @@ INSERT INTO `product` (`id`, `category_id`, `title`, `name`, `brand`, `quantity_
 (NULL, 16, 'Boissons instantannées citron 400g', 'citron', 'Samia', 12, '', 14296, '', '', '', ''),
 (NULL, 16, 'Boissons instantannées gingembre 400g', 'gingembre', 'Samia', 12, '', 14297, '', '', '', ''),
 (NULL, 16, 'Purées de piment Purée de piment extra-forte 100g', 'Purée de piment extra-forte', 'Samia', 24, '', 14298, '', '', '', ''),
-(NULL, 16, 'Purées de piment Purée de piment extra-forte au gimgembre 100g', 'Purée de piment extra-forte au gimgembre', 'Samia', 24, '', 14299, '', '', '', '')
+(NULL, 16, 'Purées de piment Purée de piment extra-forte au gimgembre 100g', 'Purée de piment extra-forte au gimgembre', 'Samia', 24, '', 14299, '', '', '', '');
