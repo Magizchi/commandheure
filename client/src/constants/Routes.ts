@@ -1,5 +1,5 @@
 export enum ROUTES {
     HOME = "/",
     SHOPPING_CART = "/panier",
-    PRODUCTS = "/products"
+    HEADECOEUR_PRODUCTS = "/heaudecoeur/products"
 }
