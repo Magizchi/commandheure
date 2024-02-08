@@ -1,35 +1,36 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ROUTES } from "../constants/Routes";
 import { ShoppingCartProvider } from "../contexts/shoppingCart";
-import Layout from "../layouts";
 import Header from "../layouts/Header";
 import ProductsPage from "./products";
+import Homepage from './home';
 import ShoppingCartPage from "./shoppingCart";
 
-const App = () => (
-  <section className="min-h-screen bg-gray-100">
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route
-          path={ROUTES.PRODUCTS + "/:id"}
-          element={
-            <Layout>
+const App = () => {
+  return (
+    <main className="min-h-screen bg-gray-100">
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route index element={<Navigate to={ROUTES.HEADECOEUR_PRODUCTS + '/alwadi'} replace />} />
+          <Route
+            path={ROUTES.HEADECOEUR_PRODUCTS + "/:id"}
+            element={
               <ProductsPage />
-            </Layout>
-          }
-        />
-        <Route
-          path={ROUTES.SHOPPING_CART}
-          element={
-            <ShoppingCartProvider>
-              <ShoppingCartPage />
-            </ShoppingCartProvider>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  </section>
-);
-
+            }
+          />
+          <Route
+            path={ROUTES.SHOPPING_CART}
+            element={
+              <ShoppingCartProvider>
+                <ShoppingCartPage />
+              </ShoppingCartProvider>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </main>
+  );
+}
 export default App;
