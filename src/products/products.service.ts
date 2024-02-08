@@ -6,7 +6,7 @@ import { CategoriesService } from 'src/categories/categories.service';
 import { Like, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entities/product.entity';
-
+import { ProductForFront as ProductsForFront } from './models/ModelsProducts';
 
 @Injectable()
 export class ProductsService {
@@ -51,35 +51,43 @@ export class ProductsService {
   }
   /**
    * @param category category of products
-   * @param page asked pages
-   * @param take take products
-   * @returns 
+   * @returns ProductsForFront[]
    */
-  async getProducts(category: string, page: number, take: number) {
-    const { id } = await this.categoriesService.findOneBy(category.replace('-', ' ').toUpperCase())
-
-    const [productPerCategory, filtered] = await this.productRepository.findAndCount({
+  async getProducts(category: string): Promise<ProductsForFront[]> {
+    const { id } = await this.categoriesService.findOneBy(category.replace('-', ' ').toLocaleLowerCase())
+    const products = await this.productRepository.find({
       where: {
         category_id: id
       },
-      skip: (page - 1) * take,
-      take: take,
-      order: {
-        code_supplier: 'asc'
-      },
-      relations: {
-        shoppingCart: true
+    })
+    const groupedProducts: ProductsForFront[] = []
+
+    products.forEach((product) => {
+      const idFromTitle = groupedProducts.findIndex(groupedProduct => product.title === groupedProduct.title)
+      if (idFromTitle === -1) {
+        groupedProducts.push({
+          title: product.title,
+          subTitle: '',
+          brand: product.brand,
+          images: [product.image],
+          origin: '',
+          variant: [{
+            volume: product.weight,
+            name: product.name,
+            pcb: +product.quantity_per_box,
+            code: product.code_supplier
+          }]
+        })
+      } else {
+        groupedProducts[idFromTitle].variant.push({
+          volume: product.weight,
+          name: product.name,
+          pcb: +product.quantity_per_box,
+          code: product.code_supplier
+        })
       }
     })
-
-    const result = {
-      products: productPerCategory.sort((a, b) => +a.code_supplier - +b.code_supplier).map((item, index) =>
-        ({ ...item, key: 1 + index + (page - 1) * take })
-      ),
-      filtered: filtered,
-      total: filtered
-    }
-    return result
+    return groupedProducts
   }
 
   async searchProducts(search: string) {

@@ -21,8 +21,8 @@ export class ProductsController {
   }
 
   @Get(':id')
-  getProducts(@Param('id') id: string, @Query() search: { page: number, size: number }) {
-    return this.productsService.getProducts(id, search.page, search.size)
+  getProducts(@Param('id') id: string) {
+    return this.productsService.getProducts(id)
   }
 
   @Get('site/:id')
