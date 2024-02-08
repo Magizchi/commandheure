@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useContext, useState } from "react";
-import { Product } from "../pages/products/models/product.models";
+import { Product } from "@pages/products/models/product.models";
 
 interface ProductListContextProps {
   product: Product;
@@ -8,7 +8,7 @@ interface ProductListContextProps {
 
 const ProductListContext = React.createContext<ProductListContextProps>({
   product: {} as Product,
-  setProduct: () => {},
+  setProduct: () => { },
 });
 
 const ShoppingCartProvider: FunctionComponent<{ children: React.ReactNode }> = ({ children }) => {

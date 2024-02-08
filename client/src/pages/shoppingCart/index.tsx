@@ -2,13 +2,13 @@ import { Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Button from "../../components/atoms/Button";
-import Table from "../../components/organims/Table";
-import EditableCell from "../../components/organims/Table/EditableCell";
-import { API } from "../../constants/API";
-import { useShoppingCartContext } from "../../contexts/shoppingCart";
-import useArrayHook from "../../hooks/useArray";
-import { Product } from "../products/models/product.models";
+import Button from "@components/atoms/Button";
+import Table from "@components/organims/Table";
+import EditableCell from "@components/organims/Table/EditableCell";
+import { API } from "@constants/API";
+import { useShoppingCartContext } from "@contexts/shoppingCart";
+import useArrayHook from "@hooks/useArray";
+import { Product } from "@pages/products/models/product.models";
 
 const ShoppingCartPage = () => {
   const { product, setProduct } = useShoppingCartContext();

@@ -30,15 +30,16 @@
       "module": "ESNext",
       "baseUrl": "src",
       "paths": {
-          "@/components/*": ["./components/*"],
-          "@/pages/*": ["./pages/*"],
-          "@/routes/*": ["./routes/*"],
-          "@/contexts/*": ["./contexts/*"],
-          "@/template/*": ["./template/*"],
-          "@/constants/*": ["./constants/*"],
-          "@/mocks/*": ["./mocks/*"],
-          "@/utils/*": ["./utils/*"],
-          "@/layouts/*": ["./layouts/*"]
+          "@components/*": ["components/*"],
+          "@pages/*": ["pages/*"],
+          "@routes/*": ["routes/*"],
+          "@contexts/*": ["contexts/*"],
+          "@template/*": ["template/*"],
+          "@constants/*": ["constants/*"],
+          "@mocks/*": ["mocks/*"],
+          "@utils/*": ["utils/*"],
+          "@layouts/*": ["layouts/*"],
+          "@hooks/*":["hooks/*"]
       }
   },
   "include": ["./src"]

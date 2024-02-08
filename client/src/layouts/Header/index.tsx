@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Select from "../../components/atoms/Select";
-import { API } from "../../constants/API";
+import Select from "@components/atoms/Select";
+import { API } from "@constants/API";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import Button from "../../components/atoms/Button";
+import Button from "@components/atoms/Button";
+import { ROUTES } from "@constants/Routes";
 
 const Header = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -25,7 +26,7 @@ const Header = (): JSX.Element => {
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between bg-white border-b-2 shadow-md h-14 border-primary">
       <h1 className="px-10">
-        <Link to={"/products/al-wadi?size=20&page=1"}>
+        <Link to={ROUTES.HEADECOEUR_PRODUCTS + '/alwadi'}>
           <span className="pr-1 font-extrabold text-primary">Le</span>
           <span className="font-extrabold text-main">Command</span>
           <span className="font-extrabold text-primary">&apos;Heure</span>
@@ -45,7 +46,7 @@ const Header = (): JSX.Element => {
         type="default"
         icon={<ShoppingCartOutlined />}
         // loading={loadings[2]}
-        onClick={() => navigate("/panier?size=20&page=1")}
+        onClick={() => navigate("/panier")}
       />
     </header>
   );

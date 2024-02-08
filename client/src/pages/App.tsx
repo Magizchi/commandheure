@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ROUTES } from "../constants/Routes";
-import { ShoppingCartProvider } from "../contexts/shoppingCart";
-import Header from "../layouts/Header";
-import ProductsPage from "./products";
-import Homepage from './home';
-import ShoppingCartPage from "./shoppingCart";
+import { ROUTES } from "@constants/Routes";
+import { ShoppingCartProvider } from "@contexts/shoppingCart";
+import Header from "@layouts/Header";
+import ProductsPage from "@pages/products";
+import Homepage from '@pages/home';
+import ShoppingCartPage from "@pages/shoppingCart";
 
 const App = () => {
   return (
