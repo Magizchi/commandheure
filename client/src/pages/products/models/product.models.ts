@@ -1,19 +1,16 @@
-export interface Product {
-    key: number;
-    id: number;
-    category_id: number;
-    name: string;
-    brand: string;
-    quantity_per_box: number;
-    ean: string;
-    code_supplier: string;
-    image: string;
-    douane: string;
-    weight: string;
-    shoppingCart: { id: number, quantities: number }
+export interface ProductVariant {
+    volume: string,
+    name: string,
+    pcb: number,
+    code: number,
+    quantity?: number
 }
 
-export const FormatProduct = (data: any[]): Product[] => data.map((product: Product) => ({
-    ...product,
-    shoppingCart: { id: product.shoppingCart?.id ?? null, quantities: product.shoppingCart?.quantities ?? 0 }
-}))
+export interface Product {
+    title: string,
+    subTitle: string,
+    brand: string,
+    images: string[],
+    origin: string,
+    variant: ProductVariant[]
+}
