@@ -9,7 +9,7 @@ interface AsideMenuProps {
 
 const AsideMenu: FunctionComponent<AsideMenuProps> = ({ menu, to }) => {
     const location = useLocation();
-    console.log('AsideMenu')
+
     return (
         <aside className="sticky flex flex-col h-full mt-5 mr-5 top-20 w-36">
             <ul className="flex flex-col bg-white border rounded-md shadow-sm border-primary text-primary">
