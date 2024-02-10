@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ROUTES } from "@constants/Routes";
-import { ShoppingCartProvider } from "@contexts/shoppingCart";
 import Header from "@layouts/Header";
 import ProductsPage from "@pages/products";
 import Homepage from '@pages/home';
@@ -23,9 +22,7 @@ const App = () => {
           <Route
             path={ROUTES.SHOPPING_CART}
             element={
-              <ShoppingCartProvider>
-                <ShoppingCartPage />
-              </ShoppingCartProvider>
+              <ShoppingCartPage />
             }
           />
         </Routes>
