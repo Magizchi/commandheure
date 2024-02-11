@@ -19,5 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "jsx": "react-jsx"
   },
+  "watchOptions": {
+    "watchFile": "fixedPollingInterval"
+  },
   "exclude": ["client"]
 }
