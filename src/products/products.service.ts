@@ -50,7 +50,8 @@ export class ProductsService {
     return 'Upload file'
   }
   /**
-   * @param category category of products
+   * Get product joins with shoppingCart with the category
+   * @param category string
    * @returns ProductsForFront[]
    */
   async getProducts(category: string): Promise<ProductsForFront[]> {
@@ -59,9 +60,11 @@ export class ProductsService {
       where: {
         category_id: id
       },
+      relations: {
+        shoppingCart: true
+      }
     })
     const groupedProducts: ProductsForFront[] = []
-
     products.forEach((product) => {
       const idFromTitle = groupedProducts.findIndex(groupedProduct => product.title === groupedProduct.title)
       if (idFromTitle === -1) {
@@ -76,7 +79,8 @@ export class ProductsService {
             volume: product.weight,
             name: product.name,
             pcb: +product.quantity_per_box,
-            code: product.code_supplier
+            code: product.code_supplier,
+            quantity: product.shoppingCart ? product.shoppingCart.quantity : 0
           }]
         })
       } else {
@@ -85,7 +89,8 @@ export class ProductsService {
           volume: product.weight,
           name: product.name,
           pcb: +product.quantity_per_box,
-          code: product.code_supplier
+          code: product.code_supplier,
+          quantity: product.shoppingCart ? product.shoppingCart.quantity : 0
         })
       }
     })

@@ -10,5 +10,6 @@ export interface ProductForFront {
         name: string,
         pcb: number,
         code: number,
+        quantity?: number
     }[]
 }
