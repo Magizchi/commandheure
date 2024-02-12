@@ -1,6 +1,6 @@
 export class CreateShoppingCartDto {
     constructor(
-        public quantities: number,
+        public quantity: number,
         public productId: number,
     ) { }
 }

@@ -5,6 +5,7 @@ export interface ProductForFront {
     images: string[],
     origin: string,
     variant: {
+        productId: number,
         volume: string,
         name: string,
         pcb: number,

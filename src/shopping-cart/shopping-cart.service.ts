@@ -14,6 +14,15 @@ export class ShoppingCartService {
 
   async create(createShoppingCartDto: CreateShoppingCartDto) {
     try {
+      const foundedProduct = await this.shoppingCartRepository.findOne({
+        where: {
+          productId: createShoppingCartDto.productId
+        }
+      })
+      if (foundedProduct) {
+        const { id } = foundedProduct
+        return this.update(id, createShoppingCartDto)
+      }
       const product = this.shoppingCartRepository.create(createShoppingCartDto)
       const saved = await this.shoppingCartRepository.save(product)
       return saved
@@ -30,7 +39,7 @@ export class ShoppingCartService {
         }
       })
 
-      return shopcart.map(({ product, id, quantities }) => ({ key: id, shoppingCart: { id, quantities, }, ...product }))
+      return shopcart
     } catch (err) {
       return `Message: ${err}`
     }
@@ -40,9 +49,10 @@ export class ShoppingCartService {
     return `This action returns a #${id} shoppingCart`;
   }
 
-  update(id: number, updateShoppingCartDto: UpdateShoppingCartDto) {
+  async update(id: number, updateShoppingCartDto: UpdateShoppingCartDto) {
     try {
-      this.shoppingCartRepository.update(id, updateShoppingCartDto)
+      const product = this.shoppingCartRepository.create(updateShoppingCartDto)
+      await this.shoppingCartRepository.update(id, product)
       return `This action updates a #${id} shoppingCart`;
     } catch (err) {
       throw `Message: ${err}`

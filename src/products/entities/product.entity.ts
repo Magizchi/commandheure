@@ -45,6 +45,6 @@ export class Product {
     @Column({ nullable: true })
     image: string
 
-    @OneToOne(() => ShoppingCart, shop => shop.product)
+    @OneToOne(() => ShoppingCart, (shop) => shop.productId)
     shoppingCart: ShoppingCart
 }

@@ -24,7 +24,7 @@ export class ShoppingCartController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateShoppingCartDto: UpdateShoppingCartDto) {
-    if (updateShoppingCartDto.quantities === 0) {
+    if (updateShoppingCartDto.quantity === 0) {
       return this.shoppingCartService.remove(+id)
     } else {
       return this.shoppingCartService.update(+id, updateShoppingCartDto);

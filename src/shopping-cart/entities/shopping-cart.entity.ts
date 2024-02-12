@@ -6,10 +6,13 @@ export class ShoppingCart {
     @PrimaryGeneratedColumn()
     id: number
 
-    @OneToOne(() => Product, product => product.shoppingCart)
-    @JoinColumn()
+    @OneToOne(() => Product, (prod) => prod.shoppingCart)
+    @JoinColumn({ name: "productId" })
     product: Product;
 
     @Column()
-    quantities: number;
+    productId: number;
+
+    @Column()
+    quantity: number;
 }
