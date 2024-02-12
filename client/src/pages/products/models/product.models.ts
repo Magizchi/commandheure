@@ -3,7 +3,8 @@ export interface ProductVariant {
     name: string,
     pcb: number,
     code: number,
-    quantity?: number
+    quantity?: number,
+    productId: number,
 }
 
 export interface Product {
