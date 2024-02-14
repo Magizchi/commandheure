@@ -8,14 +8,14 @@ import useArrayHook from '@hooks/useArray';
 import ShowProducs from '@components/organims/ShowProducts';
 import { TableProps } from 'antd';
 import Table from '@components/organims/Table';
-import InputNumber from '@components/atoms/inputs/inputNumber';
 import { Product, ProductVariant } from '@pages/products/models/product.models';
-
+import Link from '@components/atoms/Link';
 
 
 const ProductsTemplate = () => {
     const [menu, setmenu] = useState<string[]>([]);
     const { array: products, save: saveProducts } = useArrayHook<Product>([]);
+    const { array: shoppingCart, save: saveShoppingCart, show } = useArrayHook<ProductVariant>([])
     const params = useParams();
 
     const getProducts = async () => {
@@ -28,14 +28,21 @@ const ProductsTemplate = () => {
         setmenu(response.data);
     };
 
-    const setInShoppingCart = async (productVariantId: number, quantity: number) => {
-        console.log('product', productVariantId, quantity)
-        const response = await axios.post(API.SHOPPING_CART, { productId: productVariantId, quantities: quantity })
-        console.log(response)
+    const getShoppingCart = async () => {
+        const response = await axios.get(API.SHOPPING_CART + '?search=10')
+        saveShoppingCart(response.data)
+    }
+
+    const setInShoppingCart = async (productId: number, quantity: number) => {
+        const response = await axios.post(API.SHOPPING_CART, { productId, quantity })
+        if (response.data.product) {
+            getShoppingCart()
+        }
     }
 
     useEffect(() => {
         if (menu.length === 0) getMenu();
+        if (shoppingCart.length === 0) getShoppingCart()
         getProducts();
     }, [params]);
 
@@ -43,10 +50,11 @@ const ProductsTemplate = () => {
         <section className="container flex justify-between mx-auto">
             <AsideMenu menu={menu} to={ROUTES.HEADECOEUR_PRODUCTS} />
             <div className="flex flex-col flex-grow mt-6 gap-5">
-                {products.map((product, index) => <ShowProducs key={index} onChange={setInShoppingCart} {...product} index={index} register={undefined} />)}
+                {products.map((product, index) => <ShowProducs onChange={setInShoppingCart} {...product} index={index} register={undefined} />)}
             </div>
-            <div className="sticky top-20 h-full flex flex-grow mt-6 gap-5 ml-5">
-                <Table className="w-full" columns={columns} data={[]} />
+            <div className="sticky top-20 h-full flex flex-col flex-grow mt-6 gap-5 ml-5">
+                <Table className="w-full" columns={columns} data={show(10)} />
+                <Link href={ROUTES.SHOPPING_CART} className='min-w-24 max-w-48 border-2 border-primary bg-primary text-white text-center p-auto rounded-md hover:bg-stars-500'>Visualiser panier</Link>
             </div>
         </section>
     )
@@ -60,26 +68,23 @@ const columns: TableProps<ProductVariant>['columns'] = [
     },
     {
         title: 'Volume',
-        dataIndex: 'volume',
-        key: 'volume',
+        dataIndex: 'weight',
+        key: 'weight',
     },
     {
         title: 'PCB',
-        dataIndex: 'pcb',
-        key: 'pcb',
+        dataIndex: 'quantity_per_box',
+        key: 'quantity_per_box',
     },
     {
         title: 'Code',
-        dataIndex: 'code',
-        key: 'code',
+        dataIndex: 'code_supplier',
+        key: 'code_supplier',
     },
     {
         title: 'Quantité',
         dataIndex: 'quantity',
         key: 'quantity',
-        render: () => {
-            return <InputNumber />
-        }
     }
 ];
 
