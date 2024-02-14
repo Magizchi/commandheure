@@ -41,6 +41,15 @@ export class ShoppingCartService {
         order: { id: search ? 'DESC' : 'ASC' },
         take: search
       })
+      if (search) {
+        return shopcart
+          .map((item) => ({ key: item.id, quantity: item.quantity, ...item.product }))
+          .sort((a, b) => {
+            if (a.key < b.key) return -1
+            if (a.key > b.key) return 1
+            return 1
+          })
+      }
       return shopcart.map((item) => ({ key: item.id, quantity: item.quantity, ...item.product }))
     } catch (err) {
       return `Message: ${err}`
