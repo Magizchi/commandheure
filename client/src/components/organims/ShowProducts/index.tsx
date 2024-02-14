@@ -43,7 +43,7 @@ const ShowProducs: FunctionComponent<ShowProductsProps> = ({ title, brand, subTi
             key: 'quantity',
             className: 'w-1/6',
             render: (_, variant) => {
-                return <InputNumber defaultValue={variant.quantity} onChange={(value) => { if (value) onChange(variant.productId, +value) }} />
+                return <InputNumber defaultValue={variant.quantity} onChange={(value) => { if (value) onChange(variant.id, +value) }} />
             }
         }
     ];
