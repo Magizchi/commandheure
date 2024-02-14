@@ -4,10 +4,11 @@ export interface ProductVariant {
     pcb: number,
     code: number,
     quantity?: number,
-    productId: number,
+    id: number,
 }
 
 export interface Product {
+    id: number;
     title: string,
     subTitle: string,
     brand: string,
