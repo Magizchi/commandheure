@@ -69,13 +69,14 @@ export class ProductsService {
       const idFromTitle = groupedProducts.findIndex(groupedProduct => product.title === groupedProduct.title)
       if (idFromTitle === -1) {
         groupedProducts.push({
+          key: groupedProducts.length + 1,
           title: product.title,
           subTitle: '',
           brand: product.brand,
           images: [product.image],
           origin: '',
           variant: [{
-            productId: product.id,
+            id: product.id,
             volume: product.weight,
             name: product.name,
             pcb: +product.quantity_per_box,
@@ -85,7 +86,7 @@ export class ProductsService {
         })
       } else {
         groupedProducts[idFromTitle].variant.push({
-          productId: product.id,
+          id: product.id,
           volume: product.weight,
           name: product.name,
           pcb: +product.quantity_per_box,

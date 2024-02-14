@@ -1,11 +1,12 @@
 export interface ProductForFront {
+    key: number,
     title: string,
     subTitle: string,
     brand: string,
     images: string[],
     origin: string,
     variant: {
-        productId: number,
+        id: number,
         volume: string,
         name: string,
         pcb: number,

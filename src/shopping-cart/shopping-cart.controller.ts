@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, Query } from '@nestjs/common';
 import { ShoppingCartService } from './shopping-cart.service';
 import { CreateShoppingCartDto } from './dto/create-shopping-cart.dto';
 import { UpdateShoppingCartDto } from './dto/update-shopping-cart.dto';
@@ -13,8 +13,8 @@ export class ShoppingCartController {
   }
 
   @Get()
-  findAll() {
-    return this.shoppingCartService.findAll();
+  findAll(@Query("search") search = null) {
+    return this.shoppingCartService.FindProductsInShoppingCart(search);
   }
 
   @Get(':id')
@@ -27,7 +27,7 @@ export class ShoppingCartController {
     if (updateShoppingCartDto.quantity === 0) {
       return this.shoppingCartService.remove(+id)
     } else {
-      return this.shoppingCartService.update(+id, updateShoppingCartDto);
+      return this.shoppingCartService.update(+id, updateShoppingCartDto.productId, updateShoppingCartDto);
     }
   }
 

@@ -14,32 +14,34 @@ export class ShoppingCartService {
 
   async create(createShoppingCartDto: CreateShoppingCartDto) {
     try {
-      const foundedProduct = await this.shoppingCartRepository.findOne({
+      const productInShoppingCart = await this.shoppingCartRepository.findOne({
         where: {
           productId: createShoppingCartDto.productId
         }
       })
-      if (foundedProduct) {
-        const { id } = foundedProduct
-        return this.update(id, createShoppingCartDto)
+      if (productInShoppingCart) {
+        const { id, productId } = productInShoppingCart
+        return this.update(id, productId, createShoppingCartDto)
       }
       const product = this.shoppingCartRepository.create(createShoppingCartDto)
       const saved = await this.shoppingCartRepository.save(product)
-      return saved
+      const p = await this.shoppingCartRepository.findOne({ where: { id: saved.id }, relations: { product: true } })
+      return { message: 'Produit ajouter au panier', product: { ...p.product, quantity: p.quantity } }
     } catch (err) {
       return `Message: ${err}`
     }
   }
 
-  async findAll() {
+  async FindProductsInShoppingCart(search?) {
     try {
       const shopcart = await this.shoppingCartRepository.find({
         relations: {
           product: true
-        }
+        },
+        order: { id: search ? 'DESC' : 'ASC' },
+        take: search
       })
-
-      return shopcart
+      return shopcart.map((item) => ({ key: item.id, quantity: item.quantity, ...item.product }))
     } catch (err) {
       return `Message: ${err}`
     }
@@ -49,11 +51,11 @@ export class ShoppingCartService {
     return `This action returns a #${id} shoppingCart`;
   }
 
-  async update(id: number, updateShoppingCartDto: UpdateShoppingCartDto) {
+  async update(id: number, productId: number, updateShoppingCartDto: UpdateShoppingCartDto) {
     try {
       const product = this.shoppingCartRepository.create(updateShoppingCartDto)
       await this.shoppingCartRepository.update(id, product)
-      return `This action updates a #${id} shoppingCart`;
+      return { message: `This action updates a #${id} shoppingCart`, product: { id: productId, ...updateShoppingCartDto } }
     } catch (err) {
       throw `Message: ${err}`
     }
