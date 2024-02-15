@@ -78,4 +78,9 @@ export class ShoppingCartService {
       return 'Erreur Server'
     }
   }
+
+  async getExcelFile() {
+    const product = await this.FindProductsInShoppingCart()
+    return product
+  }
 }

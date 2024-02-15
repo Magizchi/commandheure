@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, Query, Header } from '@nestjs/common';
 import { ShoppingCartService } from './shopping-cart.service';
 import { CreateShoppingCartDto } from './dto/create-shopping-cart.dto';
 import { UpdateShoppingCartDto } from './dto/update-shopping-cart.dto';
@@ -17,9 +17,9 @@ export class ShoppingCartController {
     return this.shoppingCartService.FindProductsInShoppingCart(search);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.shoppingCartService.findOne(+id);
+  @Get('/excel')
+  getExcelFile() {
+    return this.shoppingCartService.getExcelFile()
   }
 
   @Patch(':id')
