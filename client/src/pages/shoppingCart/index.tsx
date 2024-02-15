@@ -6,6 +6,8 @@ import Table from "@components/organims/Table";
 import { API } from "@constants/API";
 import useArrayHook from "@hooks/useArray";
 import { ProductVariant } from "@pages/products/models/product.models";
+import { saveAs } from 'file-saver';
+import ExportCSV from "../../utils/exportCsv";
 
 const ShoppingCartPage = () => {
   const { array: products, set } = useArrayHook<ProductVariant>([]);
@@ -18,6 +20,12 @@ const ShoppingCartPage = () => {
   useEffect(() => {
     getShoppingList();
   }, []);
+
+  const GetCSVFile = async () => {
+    const response = await axios.get(API.SHOPPING_CART_CSV)
+    console.log(response.data)
+    ExportCSV(response.data)
+  }
 
   const columns: TableProps<ProductVariant>['columns'] = [
     {
@@ -50,8 +58,12 @@ const ShoppingCartPage = () => {
   return (
     <section className="container mx-auto">
       <div className="py-5">
-
-        <Button className="mb-5 bg-primary text-white border-2 border-primary hover:bg-stars-300 hover:text-primary">Sauvegarder</Button>
+        <Button
+          onClick={() => GetCSVFile()}
+          className="mb-5 bg-primary text-white border-2 border-primary hover:bg-stars-300 hover:text-primary"
+        >
+          Sauvegarder
+        </Button>
         <Table
           size="small"
           data={products}
