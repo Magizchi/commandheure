@@ -3,11 +3,11 @@
     "github":{
         "enable": false
     },
-    "build":  {
-            "src":"/apps/api/dist",
-            "use":"@now/static"
-        },
+    "build":  [{
+            "src":"app/api/src/main.ts",
+            "use":"@vercel/node"
+        }],
     "routes":[
-        {"src": "./(.*)", "dest":"app/api/src/main.ts", "method":["GET"]}
+        {"src": "./(.*)", "dest":"app/api/src/main.ts", "method":["GET","POST","PUT"]}
     ]
 }
