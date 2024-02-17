@@ -5,11 +5,11 @@
     },
     "builds": [
         {
-            "src":"/apps/client/dist",
+            "src":"apps/client/dist",
             "use":"@vercel/node"
         }, 
         {
-            "src":"/apps/api/dist",
+            "src":"apps/api/dist",
             "use":"@now/static"
         }
     ],
