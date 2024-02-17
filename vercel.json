@@ -3,16 +3,10 @@
     "github":{
         "enable": false
     },
-    "build": [
-        {
-            "src":"/apps/client/dist",
-            "use":"@vercel/node"
-        }, 
-        {
+    "build":  {
             "src":"/apps/api/dist",
             "use":"@now/static"
-        }
-    ],
+        },
     "routes":[
         {"src": "./(.*)", "dest":"app/api/src/main.ts", "method":["GET"]}
     ]
