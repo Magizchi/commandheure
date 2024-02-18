@@ -10,6 +10,6 @@
         }
     ],
     "routes":[
-        {"src": "/(.*)", "dest":"/", "methods":["GET","POST","PUT"]}
+        {"src": "./src/main.ts", "dest":"/", "methods":["GET","POST","PUT"]}
     ]
 }
