@@ -5,15 +5,15 @@
     },
     "builds": [
         {
-            "src":"/apps/api/src/main.ts",
+            "src":"/api/src/main.ts",
             "use":"@vercel/node"
         },
         {
-            "src":"/apps/client/dist/*",
+            "src":"/client/dist/*",
             "use":"@now/static"
         }
     ],
     "routes":[
-        {"src": "/(.*)", "dest":"/apps/api/src/main.ts", "methods":["GET","POST","PUT"]}
+        {"src": "/(.*)", "dest":"/api/src/main.ts", "methods":["GET","POST","PUT"]}
     ]
 }
