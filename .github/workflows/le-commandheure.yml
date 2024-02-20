@@ -1,12 +1,13 @@
-name: Deploy
+name: Deploy le-commandHeure
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
-
+  check-links:
     runs-on: ubuntu-latest
-
     steps:
       - name: Install SSH KEY
       uses: shimataro/ssh-key-action@v2
