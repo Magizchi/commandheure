@@ -19,7 +19,7 @@ jobs:
       - run: npm run build
       - run: echo $key
         with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          env: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
