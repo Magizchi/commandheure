@@ -1,43 +1,42 @@
-name: Deploy le-commandHeure
-
+name: deploy
 on:
   push:
     branches:
       - main
-
+      - master
 jobs:
-  build-and-test:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm i
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+
+      - run: npm install
       - run: npm run build
 
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
-    steps:
-      - name: Install SSH KEY
+      - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSSHKEY }}
-          know_host: 'just-a-placeholder'
-        - name: Adding Know host
-          run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/know_host
-        - name: Deploy with rsync
-          run: rsync -avz ./dist/ ${{secrets.SSSHKEY}}@${{secrets.HOST}}:/var/www/le-commandHeure
+          known_hosts: unnecessary
+
+      - name: Adding Known Hosts
+        run: ssh-keyscan -p ${{ secrets.PORT }} -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" ./dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/dist
+
+      - name: Restart Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSSHKEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/www/le-commandHeure
+            git fetch origin master
+            git reset --hard FETCH_HEAD
+            git clean -d -f --exclude secrets
+            npm install --production
+            npm run restart
