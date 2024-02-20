@@ -23,6 +23,7 @@ jobs:
       - run: npm run build
 
   deploy:
+     
     needs: build-and-test
     runs-on: ubuntu-latest
 
@@ -32,15 +33,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: appleboy/ssh-action@v1.0.3
-        env:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSSHKEY }}
-          port: ${{ secrets.PORT }}
-          script: |
+      - name: Deploy
+        uses: fifsky/ssh-action@master
+        with:
+          command: | 
             cd /var/www/le-commandHeure
             git checkout .
             git pull
             npm run build
+            # run any command you want.
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          user: ${{ secrets.USER }}
+          key: ${{ secrets.SSHKEY}}
+          args: "-tt -vvv"
