@@ -7,15 +7,15 @@ import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
-import { ServeStaticModule } from '@nestjs/serve-static'
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../..', 'client', 'dist')
+      rootPath: join(__dirname, '../..', 'client', 'dist'),
     }),
     ConfigModule.forRoot({
-      envFilePath: '.env'
+      envFilePath: '.env',
     }),
     TypeOrmModule.forRoot({
       type: 'mariadb',
@@ -25,7 +25,8 @@ import { ServeStaticModule } from '@nestjs/serve-static'
       password: process.env.DATA_BASE_PASSWORD,
       database: process.env.DATA_BASE,
       entities: [join(__dirname, '**', '*.entity.{ts,js}')],
-      synchronize: process.env.DATA_BASE_SYNCHRONIZE === "true" ? true : false,
+      migrations: [join(__dirname, './migrations', '*.ts')],
+      synchronize: process.env.DATA_BASE_SYNCHRONIZE === 'true' ? true : false,
     }),
     ProductsModule,
     CategoriesModule,
@@ -34,5 +35,4 @@ import { ServeStaticModule } from '@nestjs/serve-static'
   controllers: [AppController],
   providers: [AppService],
 })
-
-export class AppModule { }
+export class AppModule {}
