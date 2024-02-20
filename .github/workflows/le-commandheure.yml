@@ -10,9 +10,9 @@ permission:
 
 jobs:
   build:
-   runs-on: ubuntu-lastest
+    runs-on: ubuntu-lastest
    
-   steps:
+    steps:
     - uses: actions/checkout@v1
 
     - name: Copy repo content via scp
