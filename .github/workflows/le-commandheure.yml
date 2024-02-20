@@ -1,49 +1,31 @@
-name: le-commandHeure
+name: Deploy
 
-on:
-  push:
-    branches: [main]
+on: [push]
 
 jobs:
-  build-and-test:
+  build:
+
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-      - run: npm i
-      - run: npm run build
+    - uses: actions/checkout@v1
 
-  deploy:
-     
-    needs: build-and-test
-    runs-on: ubuntu-latest
+    - name: Copy repository contents via scp
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+      with:
+        source: "."
+        target: "/var/www/mywebsite"
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy
-        uses: fifsky/ssh-action@master
-        with:
-          command: | 
-            cd /var/www/le-commandHeure
-            git checkout .
-            git pull
-            npm run build
-            # run any command you want.
-          host: ${{ secrets.HOST }}
-          port: ${{ secrets.PORT }}
-          user: ${{ secrets.USER }}
-          key: ${{ secrets.SSHKEY}}
-          args: "-tt -vvv"
+    - name: Executing remote command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        script: ls
