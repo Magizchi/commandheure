@@ -29,8 +29,9 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.PORT }} -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/api/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/api
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/client
+        run:
+          - rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/api/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/api
+          - rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/client
 
       # - name: Restart Server
       #   uses: appleboy/ssh-action@master
