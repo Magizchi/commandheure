@@ -33,6 +33,9 @@ jobs:
 
       - name: Deploy with rsync Client
         run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/client
+      
+      - name: Deploy Package.json
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" ./package*.json ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/
 
       - name: Restart Server
         uses: appleboy/ssh-action@master
@@ -42,4 +45,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            cd /var/www/le-commandHeure
+            npm run install
             pm2 start /var/www/le-commandHeure/api/main.js
