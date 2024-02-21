@@ -29,22 +29,17 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.PORT }} -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync API
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/api/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/pdf-man/api
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/api/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/api
 
       - name: Deploy with rsync Client
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/pdf-man/client
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/client
 
-      # - name: Restart Server
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: ${{ secrets.PORT }}
-      #     script: |
-      #       cd /var/www/le-commandHeure
-      #       git fetch origin master
-      #       git reset --hard FETCH_HEAD
-      #       git clean -d -f --exclude secrets
-      #       npm install --production
-      #       npm run restart
+      - name: Restart Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            pm2 start /var/www/le-commandHeure/api/main.js
