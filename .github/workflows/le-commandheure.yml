@@ -46,5 +46,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/le-commandHeure
-            npm run install
-            pm2 start /var/www/le-commandHeure/api/main.js
+            npm run install --production
+            pm2 restart /var/www/le-commandHeure/api/main.js

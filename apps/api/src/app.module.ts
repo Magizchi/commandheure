@@ -12,7 +12,12 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../..', 'client', 'dist'),
+      rootPath: join(
+        __dirname,
+        '../..',
+        'client',
+        process.env.PRODUCTION ? 'dist' : '',
+      ),
     }),
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -35,4 +40,4 @@ import { ServeStaticModule } from '@nestjs/serve-static';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
