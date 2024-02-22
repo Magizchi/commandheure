@@ -50,4 +50,4 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/le-commandHeure
-            pm2 restart api/main.js
+            pm2 restart le-commandHeure
