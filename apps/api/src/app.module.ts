@@ -16,7 +16,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
         __dirname,
         '../..',
         'client',
-        process.env.PRODUCTION ? 'dist' : '',
+        'dist',
       ),
     }),
     ConfigModule.forRoot({

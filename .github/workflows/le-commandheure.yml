@@ -32,7 +32,7 @@ jobs:
         run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/api/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/api
 
       - name: Deploy with rsync Client
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/client
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/client/dist
       
       - name: Deploy Package.json
         run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" ./package*.json ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/
@@ -46,5 +46,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/le-commandHeure
-            npm run install --production
+            sudo npm run install --production
             pm2 restart /var/www/le-commandHeure/api/main.js
