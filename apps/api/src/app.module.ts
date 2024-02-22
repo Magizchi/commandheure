@@ -14,9 +14,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     ServeStaticModule.forRoot({
       rootPath: join(
         __dirname,
-        '../..',
+        '../',
         'client',
-        'dist',
       ),
     }),
     ConfigModule.forRoot({
