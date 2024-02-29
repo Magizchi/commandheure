@@ -1,6 +1,11 @@
+import { IsInt, Max, Min } from 'class-validator';
+
 export class CreateShoppingCartDto {
-    constructor(
-        public quantity: number,
-        public productId: number,
-    ) { }
+
+    @IsInt()
+    @Min(0)
+    @Max(200)
+    quantity: number;
+
+    productId: number;
 }

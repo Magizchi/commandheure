@@ -18,17 +18,17 @@ export class ShoppingCartService {
         where: {
           productId: createShoppingCartDto.productId
         }
-      })
+      });
       if (productInShoppingCart) {
-        const { id, productId } = productInShoppingCart
-        return this.update(id, productId, createShoppingCartDto)
+        const { id, productId } = productInShoppingCart;
+        return this.update(id, productId, createShoppingCartDto);
       }
-      const product = this.shoppingCartRepository.create(createShoppingCartDto)
-      const saved = await this.shoppingCartRepository.save(product)
-      const p = await this.shoppingCartRepository.findOne({ where: { id: saved.id }, relations: { product: true } })
-      return { message: 'Produit ajouter au panier', product: { ...p.product, quantity: p.quantity } }
+      const product = this.shoppingCartRepository.create(createShoppingCartDto);
+      const saved = await this.shoppingCartRepository.save(product);
+      const p = await this.shoppingCartRepository.findOne({ where: { id: saved.id }, relations: { product: true } });
+      return { message: 'Produit ajouter au panier', product: { ...p.product, quantity: p.quantity } };
     } catch (err) {
-      return `Message: ${err}`
+      return `Message: ${err}`;
     }
   }
 
@@ -39,20 +39,19 @@ export class ShoppingCartService {
           product: true
         },
         order: { id: search ? 'DESC' : 'ASC' },
-        take: search
-      })
+      });
       if (search) {
         return shopcart
           .map((item) => ({ key: item.id, quantity: item.quantity, ...item.product }))
           .sort((a, b) => {
-            if (a.key < b.key) return -1
-            if (a.key > b.key) return 1
-            return 1
-          })
+            if (a.key < b.key) return -1;
+            if (a.key > b.key) return 1;
+            return 1;
+          });
       }
-      return shopcart.map((item) => ({ key: item.id, quantity: item.quantity, ...item.product }))
+      return shopcart.map((item) => ({ key: item.id, quantity: item.quantity, ...item.product }));
     } catch (err) {
-      return `Message: ${err}`
+      return `Message: ${err}`;
     }
   }
 
@@ -62,25 +61,25 @@ export class ShoppingCartService {
 
   async update(id: number, productId: number, updateShoppingCartDto: UpdateShoppingCartDto) {
     try {
-      const product = this.shoppingCartRepository.create(updateShoppingCartDto)
-      await this.shoppingCartRepository.update(id, product)
-      return { message: `This action updates a #${id} shoppingCart`, product: { id: productId, ...updateShoppingCartDto } }
+      const product = this.shoppingCartRepository.create(updateShoppingCartDto);
+      await this.shoppingCartRepository.update(id, product);
+      return { message: `This action updates a #${id} shoppingCart`, product: { id: productId, ...updateShoppingCartDto } };
     } catch (err) {
-      throw `Message: ${err}`
+      throw `Message: ${err}`;
     }
   }
 
   remove(id: number) {
     try {
-      this.shoppingCartRepository.delete(id)
-      return `${id} supprimer`
+      this.shoppingCartRepository.delete(id);
+      return `${id} supprimer`;
     } catch (err) {
-      return 'Erreur Server'
+      return 'Erreur Server';
     }
   }
 
   async getExcelFile() {
-    const product = await this.FindProductsInShoppingCart()
-    return product
+    const product = await this.FindProductsInShoppingCart();
+    return product;
   }
 }
