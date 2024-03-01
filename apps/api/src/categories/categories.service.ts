@@ -12,18 +12,17 @@ export class CategoriesService {
     private readonly categoryRepository: Repository<Category>
   ) { }
 
-  create({ name }: CreateCategoryDto) {
-    const newCategory = new CreateCategoryDto(name)
-    this.categoryRepository.insert(newCategory)
+  create(newCategory: CreateCategoryDto) {
+    this.categoryRepository.insert(newCategory);
     return newCategory;
   }
 
   findAll() {
-    return this.categoryRepository.find()
+    return this.categoryRepository.find();
   }
 
   async findOneBy(id: string) {
-    return await this.categoryRepository.findOneBy({ name: id })
+    return await this.categoryRepository.findOneBy({ name: id });
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {

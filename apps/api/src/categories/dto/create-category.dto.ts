@@ -1,5 +1,7 @@
+import { IsString } from "class-validator";
+
 export class CreateCategoryDto {
-    constructor(
-        public name: string
-    ) { }
+
+    @IsString()
+    name: string;
 }
