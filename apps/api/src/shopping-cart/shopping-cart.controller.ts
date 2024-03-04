@@ -8,7 +8,6 @@ import {
   Delete,
   Query,
   ValidationPipe,
-  UsePipes,
   ParseIntPipe,
 } from '@nestjs/common';
 import { ShoppingCartService } from './shopping-cart.service';
@@ -26,13 +25,15 @@ export class ShoppingCartController {
   }
 
   @Get()
-  findAll(@Query(new ValidationPipe()) search: SearchParamsDto = null) {
+  findAll(@Query(new ValidationPipe()) search: SearchParamsDto) {
     return this.shoppingCartService.FindProductsInShoppingCart(search);
   }
 
   @Get('/excel')
   getExcelFile() {
-    return this.shoppingCartService.getExcelFile();
+    const fileInfo = this.shoppingCartService.getExcelFile();
+    this.shoppingCartService.dropTable();
+    return fileInfo;
   }
 
   @Patch(':id')

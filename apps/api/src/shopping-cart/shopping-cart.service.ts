@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateShoppingCartDto } from './dto/create-shopping-cart.dto';
 import { UpdateShoppingCartDto } from './dto/update-shopping-cart.dto';
 import { ShoppingCart } from './entities/shopping-cart.entity';
+import { SearchParamsDto } from './dto/search-params.dto';
 
 @Injectable()
 export class ShoppingCartService {
@@ -32,15 +33,21 @@ export class ShoppingCartService {
     }
   }
 
-  async FindProductsInShoppingCart(search?) {
+  async FindProductsInShoppingCart(search?: SearchParamsDto) {
+    let searchOption: { order?: any, take?: number; } = {};
+
+    if (search) {
+      searchOption.order = search.order;
+      searchOption.take = search?.take;
+    }
     try {
       const shopcart = await this.shoppingCartRepository.find({
         relations: {
           product: true
         },
-        order: { id: search ? 'DESC' : 'ASC' },
+        ...searchOption
       });
-      if (search) {
+      if (search && search.order) {
         return shopcart
           .map((item) => ({ key: item.id, quantity: item.quantity, ...item.product }))
           .sort((a, b) => {
@@ -81,5 +88,11 @@ export class ShoppingCartService {
   async getExcelFile() {
     const product = await this.FindProductsInShoppingCart();
     return product;
+  }
+
+  dropTable() {
+    this.shoppingCartRepository.createQueryBuilder()
+      .delete()
+      .execute();
   }
 }
