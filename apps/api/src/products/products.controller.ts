@@ -1,37 +1,31 @@
-import { Controller, Get, Post, Param, UseInterceptors, UploadedFile, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { SearchProductsDto } from './dto/SearchProduct.dto';
+import { Product } from './entities/product.entity';
+import { GetByCategoryDto } from './dto/getByCategory.dto';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) { }
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadFileCsv(@UploadedFile() file: Express.Multer.File) {
-    const csvInfoString = file.buffer.toString()
-    const uploadFileStatus = this.productsService.upload(csvInfoString)
-    return `file name ${uploadFileStatus}`
-  }
-
   @Get()
-  async searchProducts(@Query("search") search): Promise<any> {
-    const searchProducts = await this.productsService.searchProducts(search)
-    return searchProducts
+  async searchProducts(@Query(new ValidationPipe()) searchdto: SearchProductsDto): Promise<Product[]> {
+    const searchProducts = await this.productsService.searchProducts(searchdto);
+    return searchProducts;
   }
 
-  @Get(':id')
-  getProducts(@Param('id') id: string) {
-    return this.productsService.getProducts(id)
+  @Get(':byCategory')
+  getProducts(@Param(new ValidationPipe) byCategory: GetByCategoryDto) {
+    return this.productsService.getProducts(byCategory);
   }
 
   @Get('site/:id')
   redirect(@Param('id') id: string) {
-    return this.productsService.positionProduct(id)
+    return this.productsService.positionProduct(id);
   }
 
   @Get('images/get-images')
   getImages() {
-    return this.productsService.getImages()
+    return this.productsService.getImages();
   }
 }

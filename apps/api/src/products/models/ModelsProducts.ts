@@ -11,6 +11,25 @@ export interface ProductForFront {
         name: string,
         pcb: number,
         code: number,
-        quantity?: number
-    }[]
+        quantity?: number;
+    }[];
+}
+
+export enum CategoryModel {
+    "alwadi",
+    "amandes",
+    "arachides",
+    "cereales",
+    "couscous",
+    "epices",
+    "farines",
+    "grignotages",
+    "haricots",
+    "legumessec",
+    "lentilles",
+    "pates",
+    "riz",
+    "semoules",
+    "specialitesalees",
+    "specialitesucrees"
 }
