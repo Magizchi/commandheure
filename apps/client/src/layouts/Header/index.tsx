@@ -24,30 +24,31 @@ const Header = (): JSX.Element => {
   };
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between bg-white border-b-2 shadow-md h-14 border-primary">
-      <h1 className="px-10">
-        <Link to={ROUTES.HEADECOEUR_PRODUCTS + '/alwadi'}>
-          <span className="pr-1 font-extrabold text-primary">Le</span>
-          <span className="font-extrabold text-main">Command</span>
-          <span className="font-extrabold text-primary">&apos;Heure</span>
-        </Link>
-      </h1>
-      <div className="flex justify-center p-10 w-full">
-        <Select
-          value={searchValue}
-          className="!min-w-[30%]"
-          onChange={onChange}
-          onSearch={getSearchResult}
-          options={options}
+    <header className="sticky top-0 z-50 flex justify-center items-center bg-white border-b-2 shadow-md border-primary py-3 mx-auto">
+      <div className="container flex items-center justify-between">
+        <h1 className="">
+          <Link to={ROUTES.HEADECOEUR_PRODUCTS + '/alwadi'}>
+            <span className="font-extrabold text-main">Command</span>
+            <span className="font-extrabold text-primary">&apos;Heure</span>
+          </Link>
+        </h1>
+        <div className="flex justify-center w-full">
+          <Select
+            value={searchValue}
+            className="!min-w-[30%]"
+            onChange={onChange}
+            onSearch={getSearchResult}
+            options={options}
+          />
+        </div>
+        <Button
+          className="flex justify-center items-center"
+          type="default"
+          icon={<ShoppingCartOutlined />}
+          // loading={loadings[2]}
+          onClick={() => navigate("/panier")}
         />
       </div>
-      <Button
-        className="flex justify-center items-center"
-        type="default"
-        icon={<ShoppingCartOutlined />}
-        // loading={loadings[2]}
-        onClick={() => navigate("/panier")}
-      />
     </header>
   );
 };
