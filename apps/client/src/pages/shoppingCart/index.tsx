@@ -21,10 +21,9 @@ const ShoppingCartPage = () => {
   }, []);
 
   const GetCSVFile = async () => {
-    const response = await axios.get(API.SHOPPING_CART_CSV)
-    console.log(response.data)
-    ExportCSV(response.data)
-  }
+    const response = await axios.get(API.SHOPPING_CART_CSV);
+    ExportCSV(response.data);
+  };
 
   const columns: TableProps<ProductVariant>['columns'] = [
     {
@@ -55,20 +54,19 @@ const ShoppingCartPage = () => {
   ];
 
   return (
-    <section className="container mx-auto">
-      <div className="py-5">
-        <Button
-          onClick={() => GetCSVFile()}
-          className="mb-5 bg-primary text-white border-2 border-primary hover:bg-stars-300 hover:text-primary"
-        >
-          Sauvegarder
-        </Button>
-        <Table
-          size="small"
-          data={products}
-          columns={columns}
-        />
-      </div>
+    <section className="container mx-auto flex flex-col items-end">
+      <Table
+        size="small"
+        data={products}
+        columns={columns}
+        className="!mt-5 !w-full"
+      />
+      <Button
+        onClick={() => GetCSVFile()}
+        className="!my-5 bg-primary text-white border-2 border-primary hover:bg-stars-300 hover:text-primary"
+      >
+        Télécharger CSV
+      </Button>
     </section>
   );
 };
