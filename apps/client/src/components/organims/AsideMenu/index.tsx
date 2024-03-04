@@ -11,7 +11,7 @@ const AsideMenu: FunctionComponent<AsideMenuProps> = ({ menu, to }) => {
     const location = useLocation();
 
     return (
-        <aside className="sticky flex flex-col h-full mt-5 mr-5 top-20 w-36">
+        <aside className="sticky flex flex-col h-full top-20 w-36">
             <ul className="flex flex-col bg-white border rounded-md shadow-sm border-primary text-primary">
                 {menu.map((menuName: string, index: number) => (
                     <Link
