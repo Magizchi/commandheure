@@ -28,7 +28,7 @@
 				"Postman.postman-for-vscode"
 			]
 		}
-	}
+	},
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -43,7 +43,7 @@
 	// "shutdownAction": "none",
 
 	// Uncomment the next line to run commands after the container is created.
-	// "postCreateCommand": "cat /etc/os-release",
+	"postCreateCommand": "npm run dev"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
