@@ -8,7 +8,7 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
-
+import { CompaniesModule } from './companies/companies.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -25,12 +25,13 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       password: process.env.DATA_BASE_PASSWORD,
       database: process.env.DATA_BASE,
       entities: [join(__dirname, '**', '*.entity.{ts,js}')],
-      migrations: [join(__dirname, './migrations', '*.ts')],
+      migrations: [],
       synchronize: process.env.DATA_BASE_SYNCHRONIZE === 'true' ? true : false,
     }),
     ProductsModule,
     CategoriesModule,
     ShoppingCartModule,
+    CompaniesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
