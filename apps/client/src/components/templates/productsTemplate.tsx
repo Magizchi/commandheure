@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import AsideMenu from "@components/organims/AsideMenu";
 import { ROUTES } from "@constants/Routes";
 import axios from 'axios';
 import { API } from '@constants/API';
@@ -17,10 +16,10 @@ const ProductsTemplate = () => {
     const { array: products, save: saveProducts } = useArrayHook<Product>([]);
     const { array: shoppingCart, save: saveShoppingCart, show } = useArrayHook<ProductVariant>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const params = useParams();
+    const { id } = useParams();
 
     const getProducts = async () => {
-        const response = await axios.get(API.PRODUCTS + `/${params.id}`);
+        const response = await axios.get(API.PRODUCTS + `/${id}`);
         saveProducts(response.data);
     };
 
@@ -46,20 +45,19 @@ const ProductsTemplate = () => {
         if (shoppingCart.length === 0) getShoppingCart();
         getProducts();
         setLoading(false);
-    }, [params]);
+    }, [id]);
 
     if (loading) {
         return <div className="fixed top-[50%] right-[50%]"><Spin size='large' /></div>;
     }
     return (
         <section className="container flex justify-between mx-auto space-x-5">
-            <AsideMenu menu={menu} to={ROUTES.HEADECOEUR_PRODUCTS} />
             <div className="flex flex-col flex-grow mt-6 gap-5 space-y-3">
-                <h2 className="text-2xl bg-gray-100 font-bold uppercase text-primary">{params.id?.toUpperCase()}</h2>
+                <h2 className="text-2xl bg-gray-100 font-bold uppercase text-primary">{id?.toUpperCase()}</h2>
                 {products.map((product, index) => <ShowProducs onChange={setInShoppingCart} {...product} index={index} register={undefined} />)}
             </div>
             <div className="sticky top-20 h-full flex flex-col flex-grow mt-6 gap-5 space-y-3">
-                <h2 className="sticky top-20 z-50 text-2xl uppercase text-primary font-bold">panier</h2>
+                <h2 className="sticky top-20 z-50 text-2xl uppercase text-primary font-bold">Commande en cours...</h2>
                 <Table className="w-full" columns={columns} data={show(10)} />
                 <Link href={ROUTES.SHOPPING_CART} className='min-w-24 max-w-48 border-2 border-primary bg-primary text-white text-center p-auto rounded-md hover:bg-stars-500'>Visualiser panier</Link>
             </div>
