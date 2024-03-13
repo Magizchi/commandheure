@@ -29,7 +29,7 @@ const LandingPage = () => {
                 </section>
 
                 <section style={{ backgroundImage: "url(/benner.jpg)" }} className="flex flex-row space-x-48 justify-center items-center h-screen bg-cover">
-                    {LandingPageInfos.presentation.map((item) => <CardPresentation {...item} />)}
+                    {LandingPageInfos.presentation.map((item, index) => <CardPresentation key={index} {...item} />)}
                 </section>
             </main>
         </>
