@@ -1,20 +1,20 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ROUTES } from "@constants/Routes";
-import Header from "@layouts/Header";
-import ProductsPage from "@pages/products";
-import Homepage from '@pages/home';
+import LandingPage from '@pages/landing';
 import ShoppingCartPage from "@pages/shoppingCart";
+import ProductsPage from "./products";
 
 const App = () => {
   return (
-    <main className="min-h-screen bg-gray-100">
+    <div className="bg-primary">
       <BrowserRouter>
-        <Header />
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route index element={<Navigate to={ROUTES.HEADECOEUR_PRODUCTS + '/alwadi'} replace />} />
           <Route
-            path={ROUTES.HEADECOEUR_PRODUCTS + "/:id"}
+            path={ROUTES.LANDING}
+            element={<LandingPage />}
+          />
+          <Route
+            path={ROUTES.SUPPLIER_PRODUCTS}
             element={
               <ProductsPage />
             }
@@ -27,7 +27,7 @@ const App = () => {
           />
         </Routes>
       </BrowserRouter>
-    </main>
+    </div>
   );
-}
+};
 export default App;
