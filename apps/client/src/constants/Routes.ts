@@ -1,5 +1,6 @@
 export enum ROUTES {
-    HOME = "/",
+    LANDING = "/",
     SHOPPING_CART = "/panier",
-    HEADECOEUR_PRODUCTS = "/haudecoeur/products"
+    HEADECOEUR_PRODUCTS = "/haudecoeur/products",
+    SUPPLIER_PRODUCTS = "/:company/products/:id"
 }
