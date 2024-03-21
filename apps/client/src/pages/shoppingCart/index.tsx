@@ -7,9 +7,12 @@ import { API } from "@constants/API";
 import useArrayHook from "@hooks/useArray";
 import { ProductVariant } from "@pages/products/models/product.models";
 import ExportCSV from "../../utils/exportCsv";
+import MainLayout from "@layouts/MainLayout";
+import { useParams } from "react-router-dom";
 
 const ShoppingCartPage = () => {
   const { array: products, set } = useArrayHook<ProductVariant>([]);
+  const { company } = useParams();
 
   const getShoppingList = async () => {
     const { data } = await axios.get(API.SHOPPING_CART);
@@ -54,20 +57,27 @@ const ShoppingCartPage = () => {
   ];
 
   return (
-    <section className="container mx-auto flex flex-col items-end">
-      <Table
-        size="small"
-        data={products}
-        columns={columns}
-        className="!mt-5 !w-full"
-      />
-      <Button
-        onClick={() => GetCSVFile()}
-        className="!my-5 bg-primary text-white border-2 border-primary hover:bg-stars-300 hover:text-primary"
-      >
-        Télécharger CSV
-      </Button>
-    </section>
+    <MainLayout>
+      <section className="container mx-auto space-y-5">
+        <h2 className="text-xl text-primary font-bold mt-10">
+          Commande {company?.toUpperCase()}
+        </h2>
+        <Table
+          size="small"
+          data={products}
+          columns={columns}
+          className="!mt-5 !w-full"
+        />
+        <div className="flex justify-end">
+          <Button
+            onClick={() => GetCSVFile()}
+            className="!my-5 bg-primary text-white border-2 border-primary hover:bg-stars-300 hover:text-primary"
+          >
+            Télécharger CSV
+          </Button>
+        </div>
+      </section>
+    </MainLayout>
   );
 };
 
