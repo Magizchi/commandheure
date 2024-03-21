@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useArrayHook = <TItems extends { id: number }>(defaultValue: TItems[]) => {
+const useArrayHook = <TItems extends { id: number; }>(defaultValue: TItems[]) => {
   const [array, setArray] = useState<TItems[]>(defaultValue);
 
   const save = (products: TItems[]) => setArray(products);
@@ -13,11 +13,11 @@ const useArrayHook = <TItems extends { id: number }>(defaultValue: TItems[]) => 
 
   const show = (limit: number): TItems[] => {
     if (array.length <= limit) {
-      return array
+      return array;
     } else {
-      return array.splice(limit)
+      return array.splice(limit);
     }
-  }
+  };
 
   const update = (products: TItems): TItems[] => {
     const newArray = array.slice();
