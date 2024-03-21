@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import AsyncSelect from 'react-select/async';
 import type { AsyncProps } from 'react-select/async';
 
