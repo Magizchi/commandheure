@@ -2,12 +2,12 @@ import classNames from 'classnames';
 import { FunctionComponent } from 'react';
 import { Link, Location } from 'react-router-dom';
 
-interface DropdownProps {
+interface DropmenuProps {
     title: string;
     menu: readonly string[];
     location: Location;
 }
-const Dropdown: FunctionComponent<DropdownProps> = ({ title, menu, location }) => {
+const Dropmenu: FunctionComponent<DropmenuProps> = ({ title, menu, location }) => {
     return (
         <li className='space-y-2'>
             <p className={classNames("w-full", {
@@ -33,4 +33,4 @@ const Dropdown: FunctionComponent<DropdownProps> = ({ title, menu, location }) =
     );
 };
 
-export default Dropdown; 
+export default Dropmenu; 
