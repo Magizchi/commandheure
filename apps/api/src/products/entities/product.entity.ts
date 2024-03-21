@@ -9,7 +9,7 @@ export class Product {
 
     @ManyToOne(() => Category, category => category.products)
     @JoinColumn({ name: "category_id" })
-    category: number;
+    category: Category;
 
     @Column()
     category_id: number;
@@ -43,8 +43,8 @@ export class Product {
     weight: string;
 
     @Column({ nullable: true })
-    image: string
+    image: string;
 
     @OneToOne(() => ShoppingCart, (shop) => shop.product)
-    shoppingCart: ShoppingCart
+    shoppingCart: ShoppingCart;
 }

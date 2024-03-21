@@ -22,5 +22,7 @@
   "watchOptions": {
     "watchFile": "fixedPollingInterval"
   },
-  "exclude": ["client"]
+  "exclude": ["client",  "node_modules",
+  "./node_modules",
+  "./node_modules/*"]
 }

@@ -25,18 +25,31 @@ export class ProductsService {
    * @param category string
    * @returns ProductsForFront[]
    */
-  async getProducts({ byCategory }: GetByCategoryDto): Promise<ProductsForFront[]> {
+  async getProducts({ byCategory }: GetByCategoryDto, { search }: SearchProductsDto): Promise<ProductsForFront[]> {
+    let searchLike = {};
+    if (search) {
+      if (isNaN(+search)) {
+        searchLike = { title: Like(`%${search}%`) };
+      } else {
+        searchLike = { code_supplier: Like(`%${search}%`) };
+      }
+    }
+
+    console.log('s', search, searchLike);
     // Get Category id
     const { id } = await this.categoriesService.findOneBy(byCategory.replace('-', ' ').toLocaleLowerCase());
     // Find Products with categoryID
     const products = await this.productRepository.find({
-      where: {
-        category_id: id
-      },
+      where: [{
+        category_id: id,
+        ...searchLike
+      }],
       relations: {
         shoppingCart: true
       }
     });
+    console.log('product', products);
+
     // Regroup product by title
     const groupedProducts: ProductsForFront[] = [];
     products.forEach((product) => {
@@ -80,7 +93,12 @@ export class ProductsService {
       searchLike = { code_supplier: Like(`%${search}%`) };
     }
 
-    const filteredProduct = await this.productRepository.findBy(searchLike);
+    const filteredProduct = await this.productRepository.find({
+      where: searchLike,
+      relations: {
+        category: true
+      }
+    });
     return filteredProduct;
   }
 
