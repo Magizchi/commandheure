@@ -1,31 +1,25 @@
 import { useEffect, useState } from 'react';
-import { ROUTES } from "@constants/Routes";
 import axios from 'axios';
 import { API } from '@constants/API';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import useArrayHook from '@hooks/useArray';
 import ShowProducs from '@components/organims/ShowProducts';
 import { Spin, TableProps } from 'antd';
 import Table from '@components/organims/Table';
 import { Product, ProductVariant } from '@pages/products/models/product.models';
-import Link from '@components/atoms/Link';
-
+import Button from '@components/atoms/Button';
+import { ArrowUpOutlined } from "@ant-design/icons";
 
 const ProductsTemplate = () => {
-    const [menu, setmenu] = useState<string[]>([]);
     const { array: products, save: saveProducts } = useArrayHook<Product>([]);
-    const { array: shoppingCart, save: saveShoppingCart, show } = useArrayHook<ProductVariant>([]);
+    const { save: saveShoppingCart, show } = useArrayHook<ProductVariant>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const { id } = useParams();
+    const [searchParams] = useSearchParams();
 
     const getProducts = async () => {
-        const response = await axios.get(API.PRODUCTS + `/${id}`);
+        const response = await axios.get(API.PRODUCTS + `/${id}`, { params: { search: searchParams.get('search') } });
         saveProducts(response.data);
-    };
-
-    const getMenu = async () => {
-        const response = await axios.get(API.MENU);
-        setmenu(response.data);
     };
 
     const getShoppingCart = async () => {
@@ -40,26 +34,35 @@ const ProductsTemplate = () => {
         }
     };
 
+    const goToTop = () => {
+        const rootElement = document.documentElement;
+        rootElement.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     useEffect(() => {
-        if (menu.length === 0) getMenu();
-        if (shoppingCart.length === 0) getShoppingCart();
+        getShoppingCart();
+    }, []);
+
+    useEffect(() => {
         getProducts();
         setLoading(false);
-    }, [id]);
+    }, [id, searchParams]);
 
     if (loading) {
         return <div className="fixed top-[50%] right-[50%]"><Spin size='large' /></div>;
     }
     return (
-        <section className="container flex justify-between mx-auto space-x-5">
-            <div className="flex flex-col flex-grow mt-6 gap-5 space-y-3">
-                <h2 className="text-2xl bg-gray-100 font-bold uppercase text-primary">{id?.toUpperCase()}</h2>
-                {products.map((product, index) => <ShowProducs onChange={setInShoppingCart} {...product} index={index} register={undefined} />)}
+        <section className="container flex justify-between mx-auto space-x-5 mb-5 relative">
+            <div className="flex flex-col flex-grow mt-6 gap-5 space-y-3 scroll-smooth">
+                <h3 className="text-xl bg-gray-100 font-bold uppercase text-primary">{id?.toUpperCase()}</h3>
+                {products.map((product, index) => <ShowProducs key={index} onChange={setInShoppingCart} {...product} index={index} register={undefined} />)}
             </div>
             <div className="sticky top-20 h-full flex flex-col flex-grow mt-6 gap-5 space-y-3">
-                <h2 className="sticky top-20 z-50 text-2xl uppercase text-primary font-bold">Commande en cours...</h2>
+                <h3 className="sticky top-20 z-50 text-xl uppercase text-primary font-bold">Commande en cours...</h3>
                 <Table className="w-full" columns={columns} data={show(10)} />
-                <Link href={ROUTES.SHOPPING_CART} className='min-w-24 max-w-48 border-2 border-primary bg-primary text-white text-center p-auto rounded-md hover:bg-stars-500'>Visualiser panier</Link>
+            </div>
+            <div className='absolute bottom-0 right-0'>
+                <Button onClick={() => goToTop()} className='flex justify-center items-center'><ArrowUpOutlined /></Button>
             </div>
         </section>
     );

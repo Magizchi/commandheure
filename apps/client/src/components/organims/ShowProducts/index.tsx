@@ -7,9 +7,9 @@ import { TableProps } from "antd";
 import useDelay from "@hooks/useHookDelay";
 
 interface ShowProductsProps extends Product {
-    index: number
-    register: any
-    onChange: (productVariantCode: number, quantity: number) => void
+    index: number;
+    register: any;
+    onChange: (productVariantCode: number, quantity: number) => void;
 }
 
 const ShowProducs: FunctionComponent<ShowProductsProps> = ({ title, brand, subTitle, origin, index, variant = [], onChange }) => {
@@ -44,7 +44,7 @@ const ShowProducs: FunctionComponent<ShowProductsProps> = ({ title, brand, subTi
             key: 'quantity',
             className: 'w-1/6',
             render: (_, variant) => {
-                return <InputNumber defaultValue={variant.quantity} onChange={useDelay((value) => onChange(variant.id, +value), 500)} />
+                return <InputNumber defaultValue={variant.quantity} onChange={useDelay((value) => onChange(variant.id, +value), 500)} />;
             }
         }
     ];
@@ -52,7 +52,6 @@ const ShowProducs: FunctionComponent<ShowProductsProps> = ({ title, brand, subTi
     return (
         <article
             className="bg-white border border-gray-200 rounded-md shadow-sm text-primary flex flex-col"
-            id={title}
             key={index + title}
         >
             <div className="mx-2 my-2">
@@ -61,11 +60,11 @@ const ShowProducs: FunctionComponent<ShowProductsProps> = ({ title, brand, subTi
                 <p>{brand}</p>
                 <p>{origin}</p>
             </div>
-            <div key={index + title} className="w-auto">
-                <Table columns={columns} data={variant} />
+            <div className="w-auto">
+                <Table columns={columns} data={variant} rowKey={(recored) => recored.code} />
             </div>
         </article>
-    )
+    );
 };
 
 export default ShowProducs;
