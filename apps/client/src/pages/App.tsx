@@ -20,7 +20,7 @@ const App = () => {
             }
           />
           <Route
-            path={ROUTES.SHOPPING_CART}
+            path={ROUTES.SUPPLIER_SHOPPING_CART}
             element={
               <ShoppingCartPage />
             }
