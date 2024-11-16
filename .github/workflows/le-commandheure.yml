@@ -30,24 +30,13 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.PORT }} -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync API
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/api/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/api
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/api/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/etc/var/www/commandheure/api
 
       - name: Deploy with rsync Client
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/client
-      
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" apps/client/dist/ ${{ secrets.USER }}@${{ secrets.HOST }}:/etc/var/www/commandheure/client
+
       - name: Deploy NodeModule
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" node_modules/ ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/node_modules
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" node_modules/ ${{ secrets.USER }}@${{ secrets.HOST }}:/etc/var/www/commandheure/node_modules
 
       - name: Deploy Package.json
-        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" ./package*.json ${{ secrets.USER }}@${{ secrets.HOST }}:/var/www/le-commandHeure/
-
-      # - name: Restart Server
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: ${{ secrets.PORT }}
-      #     script: |
-      #       cd /var/www/le-commandHeure
-      #       sudo pm2 restart le-commandHeure
+        run: rsync -avz -e "ssh -p ${{ secrets.PORT }}" ./package*.json ${{ secrets.USER }}@${{ secrets.HOST }}:/etc/var/www/commandheure/
